@@ -1,0 +1,303 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Field Sales HQ//Steven Pahl Route Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+
+BEGIN:VEVENT
+UID:mon-smtr@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260817T090000
+DTEND;TZID=America/Toronto:20260817T093000
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:SMTR (aka Robert's Transport) — Mississauga
+LOCATION:300 Statement Drive, Mississauga
+DESCRIPTION:Contact: Kam Purvis\nPhone: 905-564-9999\nEmail: kam.purvis@robert.ca\nWeekly Monday stop — part of the Mississauga loop.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:mon-paclease@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260817T094500
+DTEND;TZID=America/Toronto:20260817T101500
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:Paclease Leasing — Mississauga
+LOCATION:6465 Van Deemter Ct, Mississauga
+DESCRIPTION:Contact: Natalie Brown\nPhone: 905-564-2300\nWeekly Monday stop — part of the Mississauga loop.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:mon-laidlawmiss@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260817T103000
+DTEND;TZID=America/Toronto:20260817T110000
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:Laidlaw Carriers — Mississauga
+LOCATION:2278 Lakeshore Road West, Mississauga
+DESCRIPTION:Contact: Kevin Wells\nEmail: kwells@laidlawvan.ca\nWeekly Monday stop. High priority — Laidlaw/Contrans are important accounts.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:mon-caravan@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260817T111500
+DTEND;TZID=America/Toronto:20260817T114500
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:Caravan Group of Companies — Oakville
+LOCATION:2284 Wyecroft Road, Oakville
+DESCRIPTION:Contact: Vera and JP (Steven's written one-pager says "Vera" — an earlier voice update said "Vira." Still unconfirmed — please tell me which is correct.)\nWeekly Monday stop.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:tuefri-laidlawpuslinch@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260811T083000
+DTEND;TZID=America/Toronto:20260811T090000
+RRULE:FREQ=WEEKLY;BYDAY=TU,FR
+SUMMARY:Laidlaw Carriers — Puslinch
+LOCATION:21 Kerr Crescent, Puslinch
+DESCRIPTION:Contact: Kevin Gerritsen\nPhone: 519-766-0660\nTwice-weekly stop (Tue AND Fri, as of Aug 11) — Puslinch/Elmira core route. High priority.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:tuefri-fasmag@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260811T090000
+DTEND;TZID=America/Toronto:20260811T091500
+RRULE:FREQ=WEEKLY;BYDAY=TU,FR
+SUMMARY:Fasmag Vending — Puslinch
+LOCATION:21 Kerr Crescent, Puslinch
+DESCRIPTION:Contact: Kevin Gerritsen\nPhone: 519-766-0660\nSame stop as Laidlaw Puslinch — twice-weekly (Tue AND Fri, as of Aug 11).
+END:VEVENT
+
+BEGIN:VEVENT
+UID:tuefri-thurtransport@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260811T093000
+DTEND;TZID=America/Toronto:20260811T100000
+RRULE:FREQ=WEEKLY;BYDAY=TU,FR
+SUMMARY:Thur Transport — Elmira
+LOCATION:Elmira, ON
+DESCRIPTION:Contact: Trevor\nPhone: 519-668-8420\nTwice-weekly stop (Tue AND Fri, as of Aug 11). IMPORTANT: keep zip ties and other consumables overstocked — this account runs low fast (was an at-risk save from January).
+END:VEVENT
+
+BEGIN:VEVENT
+UID:tuea-tricity@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260818T100000
+DTEND;TZID=America/Toronto:20260818T103000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU
+SUMMARY:Tri City Ready Mix — Kitchener (Week A Tuesday)
+LOCATION:36 Manitou Drive, Kitchener
+DESCRIPTION:Contact: Rob Blackwell\nPhone: 519-883-2700 ext 225\nBiweekly. Moved from Friday to Tuesday (Aug 11) — fits the Elmira/Puslinch loop better. Week A Tuesdays.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:tuea-briankurtz@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260818T103000
+DTEND;TZID=America/Toronto:20260818T110000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU
+SUMMARY:Brian Kurtz Trucking — Breslau (Week A Tuesday)
+LOCATION:6960 Speedvale Avenue West, Breslau
+DESCRIPTION:Contact: Kristine Turtle (Shop Administrator / Parts Clerk)\nPhone: 519-836-5821 ext 237\nBiweekly. Moved from Thursday to Tuesday (Aug 11) — rides with the Elmira route. Week A Tuesdays.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:tuea-vernla@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260818T110000
+DTEND;TZID=America/Toronto:20260818T113000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU
+SUMMARY:Vernla Livestock — Wallenstein (Week A Tuesday)
+LOCATION:3434 Herrgott Road R.3, Wallenstein
+DESCRIPTION:Contact: Joe / Don\nPhone: 519-699-5921\nBiweekly. Moved from Thursday to Tuesday (Aug 11) — rides with the Elmira route. Week A Tuesdays.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:tueb-heheavytruck@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260811T100000
+DTEND;TZID=America/Toronto:20260811T103000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TU
+SUMMARY:H and E Heavy Truck — Millbank (Week B Tuesday)
+LOCATION:4881 William Hastings Line, Millbank
+DESCRIPTION:Contact: Marlene Kuepfer / Nick Kuepfer\nPhone: 519-699-0099\nBiweekly. Moved from Thursday to Tuesday (Aug 11) — rides with the Elmira route. Week B Tuesdays.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:wedb-jonker@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260812T083000
+DTEND;TZID=America/Toronto:20260812T090000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=WE
+SUMMARY:Jonker Trucking — Smithville (Week B Wednesday)
+LOCATION:7728 Silver Street, Smithville
+DESCRIPTION:Contact: pending — Jaap Zwaan no longer with the company, new contact TBD.\nBiweekly, Week B Wednesdays. Part of the Niagara cluster.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:weda-cotton@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260819T083000
+DTEND;TZID=America/Toronto:20260819T090000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=WE
+SUMMARY:Cotton Inc. — Niagara Falls (Week A Wednesday)
+LOCATION:2125 Fruitbelt Parkway, Niagara Falls
+DESCRIPTION:Contact: Terry Bacon\nPhone: 905-262-2000 ext 270\nBiweekly, Week A Wednesdays. Part of the Niagara cluster.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:monthly-scottwoods@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260819T093000
+DTEND;TZID=America/Toronto:20260819T100000
+RRULE:FREQ=MONTHLY;BYDAY=3WE
+SUMMARY:Scott Woods Transport — Niagara Falls
+LOCATION:8230 Oakwood Drive, Niagara Falls
+DESCRIPTION:Contact: Dave Litherland (Buyer)\nPhone: 905-577-2653\nMonthly, 3rd Wednesday of the month. Part of the Niagara cluster. Waiting on Dave to send the PO back from last quote.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:weda-springcreek@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260819T100000
+DTEND;TZID=America/Toronto:20260819T103000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=WE
+SUMMARY:Spring Creek Gr. of Companies — Beamsville (Week A Wednesday)
+LOCATION:4695 Bartlett Road, Beamsville
+DESCRIPTION:Contact: Tom\nPhone: 905-563-9989\nBiweekly, Week A Wednesdays. Grouped into the Niagara cluster.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:monthly-inland@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260826T103000
+DTEND;TZID=America/Toronto:20260826T110000
+RRULE:FREQ=MONTHLY
+SUMMARY:Inland Truck and Trailer — Thorold
+LOCATION:1281 Old Thorold Stone Rd, Thorold
+DESCRIPTION:Contact: Chris Smith / Jan / Brad\nPhone: 905-227-6724\nMonthly (corrected from biweekly, Aug 11) — date approximate, adjust as needed. Grouped into the Niagara cluster.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:wed-newniagaraprospect@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260812T110000
+DTEND;TZID=America/Toronto:20260812T113000
+RRULE:FREQ=WEEKLY;BYDAY=WE
+SUMMARY:New prospect (near Cotton Inc.) — Niagara border
+LOCATION:Niagara Falls area (near Cotton Inc.)
+DESCRIPTION:Contact name still unconfirmed — sounds like "Ira," flagging rather than guessing. New prospect being developed near Cotton Inc. Frequency/cadence still being established — adjust once the relationship firms up.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:wed-hagersville@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260812T113000
+DTEND;TZID=America/Toronto:20260812T120000
+RRULE:FREQ=WEEKLY;BYDAY=WE
+SUMMARY:Contrans Flatbed Hagersville
+LOCATION:80 Third Line, Hagersville
+DESCRIPTION:Contact: "Kevin B." (last name unconfirmed)\nMoved from Thursday to Wednesday (Aug 11). Weekly. Laidlaw/Contrans important account. Order held up on a locking coupler — waiting on Steve Sr, will likely be a separate invoice.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:wed-empire@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260812T120000
+DTEND;TZID=America/Toronto:20260812T123000
+RRULE:FREQ=WEEKLY;BYDAY=WE
+SUMMARY:Empire Transportation — Grimsby
+LOCATION:263 South Service Rd, Grimsby
+DESCRIPTION:Contact: Edward (new — replaced Darrell Frauser)\nPhone: 905-945-9654\nEmail: edward@empiretrans.ca\nMoved from Thursday to Wednesday (Aug 11, confirmed) — part of the Niagara cluster.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:thu-laidlawham@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260813T083000
+DTEND;TZID=America/Toronto:20260813T090000
+RRULE:FREQ=WEEKLY;BYDAY=TH
+SUMMARY:Laidlaw Carriers — Hamilton
+LOCATION:89 Glow Ave, Hamilton
+DESCRIPTION:Contact: Phill "Bud" Smith\nPhone: 1-289-776-7140\nMoved from Wednesday to Thursday (Aug 11). Weekly. High priority.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:thu-fluke@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260813T090000
+DTEND;TZID=America/Toronto:20260813T093000
+RRULE:FREQ=WEEKLY;BYDAY=TH
+SUMMARY:Fluke Transport — Hamilton
+LOCATION:450 Sherman Avenue North, Drop Off Bay 24/25, Hamilton
+DESCRIPTION:Contact: Lisa Mule\nPhone: 905-578-0677\nEmail: lmule@fluke.ca\nMoved from Wednesday to Thursday (Aug 11). Weekly.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:thua-fleetmaint@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260820T100000
+DTEND;TZID=America/Toronto:20260820T103000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TH
+SUMMARY:Fleet Maintenance Services — Hamilton (Week A Thursday)
+LOCATION:1818 Burlington Street E, Hamilton
+DESCRIPTION:Contact: Jamie Childs\nPhone: 905-549-7800\nBiweekly, Week A Thursdays.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:thua-populartire@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260820T103000
+DTEND;TZID=America/Toronto:20260820T110000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TH
+SUMMARY:Popular Tire Hamilton — Week A Thursday
+LOCATION:565 Parkdale Ave North, Hamilton
+DESCRIPTION:Contact: Kam Sunner\nPhone: 905-312-5555\nBiweekly, Week A Thursdays.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:thua-ontarioreadymix@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260820T110000
+DTEND;TZID=America/Toronto:20260820T113000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TH
+SUMMARY:Ontario Readymix (Milton Plant) — Week A Thursday
+LOCATION:105 Steeles Avenue East, Milton
+DESCRIPTION:Contact: Mike Thompson\nPhone: 437-214-9081\nBiweekly, Week A Thursdays.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:thub-tpt@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260813T100000
+DTEND;TZID=America/Toronto:20260813T103000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TH
+SUMMARY:TPT Systems — Milton (Week B Thursday)
+LOCATION:8604 Escarpment Way, Milton
+DESCRIPTION:Contact: Tim Livingstone\nPhone: 905-693-4160\nBiweekly, Week B Thursdays.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:thub-sharp@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260813T103000
+DTEND;TZID=America/Toronto:20260813T110000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TH
+SUMMARY:Sharp Transportation — Cambridge (Week B Thursday) — WINDING DOWN
+LOCATION:1225 Balmoral Road, Cambridge
+DESCRIPTION:Contact: Blain Jefferey\nPhone: 888-532-2323\nNO LONGER A CUSTOMER as of Aug 10 — equipment being pulled and moved to Mill Creek (Sept 1 install). Steven flagged (Aug 11) this could move to Friday instead since Sharp is in Cambridge, closer to the Fri Puslinch/Elmira loop — TBD, not decided. Delete/ignore this event once the transfer is complete.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:monthly-mohawk@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260813T113000
+DTEND;TZID=America/Toronto:20260813T120000
+RRULE:FREQ=MONTHLY
+SUMMARY:Mohawk Racetrack — Campbellville
+LOCATION:9430 Guelph Line, Campbellville
+DESCRIPTION:Contact: Frank Mastromarco\nPhone: 888-675-7993\nMonthly — currently overdue (last visit Jul 17). Bring the bug spray/traps quote for Frank + Kevin's concerns. Confirmed Aug11 — stays Thursday, closest to Milton.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:millcreek-install@fieldsaleshq
+DTSTART;VALUE=DATE:20260901
+DTEND;VALUE=DATE:20260902
+SUMMARY:Mill Creek — New Install (equipment transfer from Sharp)
+DESCRIPTION:Big one — new account, bigger than Sharp Transportation. Equipment being transferred over from Sharp (winding down as a customer). Address/contact still TBD. Steven expects this to become a weekly account, likely folded into the Tuesday Elmira route once details are confirmed.
+END:VEVENT
+
+BEGIN:VEVENT
+UID:biweekly-expenses@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260816T180000
+DTEND;TZID=America/Toronto:20260816T183000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=SU
+SUMMARY:⏰ Submit expenses + payroll hours (due Tue — get it in early)
+DESCRIPTION:Matches PRD's actual biweekly pay period schedule — official submission deadline is the Tuesday right after this reminder. Submitting Sunday/Monday instead of waiting until Tuesday avoids the last-minute scramble (near-miss with HR on Aug 10).
+END:VEVENT
+
+BEGIN:VEVENT
+UID:biweekly-expenses-monday@fieldsaleshq
+DTSTART;TZID=America/Toronto:20260817T180000
+DTEND;TZID=America/Toronto:20260817T183000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=MO
+SUMMARY:⏰ LAST CHANCE — expenses + payroll due tomorrow (Tue)
+DESCRIPTION:Backup reminder in case Sunday's got missed. Official PRD deadline is Tuesday — this is the last full day to get it submitted early.
+END:VEVENT
+
+END:VCALENDAR

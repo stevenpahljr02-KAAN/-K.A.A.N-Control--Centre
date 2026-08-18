@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steven — Today</title>
+<style>
+  :root, .v {
+    --s1:#17181c; --s2:#1f2126; --pg:#0b0c0f; --tx:#f4f5f7; --t2:#b8bcc6; --mut:#838894;
+    --gl:#2a2d34; --bd:rgba(255,255,255,0.10);
+    --grn:#24c98d; --blu:#56a0f5; --amb:#f0913a; --vio:#a78bf0; --good:#2bc463; --crit:#ef5b5b; --warn:#eaa62c;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--pg);color:var(--tx);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:600px;margin:0 auto;padding:0 14px 50px}
+  header.hero{margin:14px 0 14px;padding:22px 20px;border-radius:20px;color:#fff;
+    background:radial-gradient(135% 150% at 0% 0%,rgba(37,99,235,0.55),transparent 60%),radial-gradient(140% 150% at 100% 15%,rgba(16,185,129,0.42),transparent 60%),radial-gradient(120% 120% at 90% 100%,rgba(249,115,22,0.30),transparent 55%),#0c1018;
+    border:1px solid rgba(255,255,255,0.10);box-shadow:0 12px 30px -12px rgba(0,0,0,0.6)}
+  header.hero .eb{font-size:11.5px;text-transform:uppercase;letter-spacing:.12em;color:#7dd3fc;font-weight:800}
+  header.hero h1{font-size:30px;margin:6px 0 3px;letter-spacing:-.03em;font-weight:800}
+  header.hero .sub{color:rgba(255,255,255,0.78);font-size:13.5px}
+  header.hero .focus{margin-top:13px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:11px 13px;font-size:13.5px}
+  header.hero .focus b{color:#fff}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+  .tile{background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:13px;position:relative;overflow:hidden}
+  .tile::before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:linear-gradient(90deg,var(--grn),var(--blu))}
+  .tile.warn::before{background:linear-gradient(90deg,var(--warn),var(--amb))}
+  .tile.lock::before{background:linear-gradient(90deg,var(--vio),var(--blu))}
+  .tile .l{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+  .tile .v{font-size:24px;font-weight:800;margin-top:5px;letter-spacing:-.02em}
+  .tile .f{font-size:11.5px;color:var(--t2);margin-top:3px}
+  .card{background:var(--s1);border:1px solid var(--bd);border-radius:15px;padding:16px;margin-bottom:12px}
+  .card h2{font-size:15px;font-weight:800;margin:0 0 10px;letter-spacing:-.01em;display:flex;align-items:center;gap:7px}
+  .card h2 .dot{width:8px;height:8px;border-radius:50%}
+  ul.g{list-style:none;margin:0;padding:0}
+  ul.g li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--gl);font-size:13.5px}
+  ul.g li:last-child{border-bottom:none}
+  ul.g li input{margin-top:2px;width:17px;height:17px;flex-shrink:0;accent-color:var(--grn)}
+  ul.g li .t strong{display:block;font-weight:650}
+  ul.g li .t span{color:var(--t2);font-size:12px}
+  .bills{list-style:none;margin:0;padding:0}
+  .bills li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--gl);font-size:13.5px}
+  .bills li:last-child{border-bottom:none}
+  .bills .d{color:var(--mut);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .bills .amt{font-weight:700;font-variant-numeric:tabular-nums}
+  .rhythm li{list-style:none;padding:7px 0;border-bottom:1px solid var(--gl);font-size:13px;display:flex;gap:10px}
+  .rhythm{margin:0;padding:0}
+  .rhythm li:last-child{border-bottom:none}
+  .rhythm .tm{color:var(--blu);font-weight:700;min-width:78px;font-size:12px}
+  .rhythm li.you .tm{color:var(--vio)}
+  .note{background:var(--s2);border:1px solid var(--bd);border-radius:12px;padding:12px 13px;font-size:12.5px;color:var(--t2);margin-top:2px}
+  .note .k{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:800;color:var(--good);margin-bottom:4px}
+  .foot{font-size:11.5px;color:var(--mut);margin-top:14px;text-align:center}
+</style>
+</head>
+<body class="v">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eb">Today at a glance</div>
+    <h1>Today</h1>
+    <div class="sub">The one-screen version &mdash; just what matters right now.</div>
+    <div class="focus"><b>$500 goal: DONE &#10003;</b> &mdash; Dad's $800 stays waived as long as you hold it. Now just coast to payday: keep TD spending light, you've got food covered. The $1,615 vault is September's.</div>
+  </header>
+
+  <div class="tiles">
+    <div class="tile warn">
+      <div class="l">TD chequing &mdash; spend money</div>
+      <div class="v">$107.26</div>
+      <div class="f">keep it light till Aug 27 payday</div>
+    </div>
+    <div class="tile lock">
+      <div class="l">CIBC vault &mdash; locked</div>
+      <div class="v">$1,615</div>
+      <div class="f">for Sept 1&ndash;7 bills. Don't touch.</div>
+    </div>
+    <div class="tile">
+      <div class="l">CIBC savings &mdash; $500 goal</div>
+      <div class="v" style="font-size:20px;color:var(--good);">$500 &#10003;</div>
+      <div class="f">HIT Aug 18 &mdash; keeps Dad's waiver. Hold it.</div>
+    </div>
+    <div class="tile">
+      <div class="l">Next payday</div>
+      <div class="v" style="font-size:20px;">Aug 27</div>
+      <div class="f">then the real wiggle room shows up</div>
+    </div>
+    <div class="tile">
+      <div class="l">Visa &mdash; #1 target</div>
+      <div class="v" style="font-size:20px;">$1,359</div>
+      <div class="f">27% &mdash; the one to kill</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot" style="background:var(--amb)"></span>This week &mdash; the only 3 that matter</h2>
+    <ul class="g">
+      <li><input type="checkbox"><div class="t"><strong>Coast to payday</strong><span>Keep TD spending near zero till Aug 27. Eat what you already bought.</span></div></li>
+      <li><input type="checkbox"><div class="t"><strong>Find the Apple $39.53 charge</strong><span>Settings &rarr; your name &rarr; Subscriptions. Cancel it if it's a ghost = found money.</span></div></li>
+      <li><input type="checkbox"><div class="t"><strong>Send the Visa screenshots</strong><span>So we reconcile the card and set the payoff plan.</span></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot" style="background:var(--grn)"></span>Bills on the horizon</h2>
+    <ul class="bills">
+      <li><span><span class="d">Aug 28</span><br>Rogers internet</span><span class="amt">$143.99</span></li>
+      <li><span><span class="d">Sept 1</span><br>Rent</span><span class="amt">$1,900</span></li>
+      <li><span><span class="d">Sept 2</span><br>Hydro</span><span class="amt">$115.99</span></li>
+      <li><span><span class="d">Sept 7</span><br>Insurance</span><span class="amt">$402.88</span></li>
+      <li><span><span class="d">Sept</span><br>Telus buyout (one-time)</span><span class="amt">$460</span></li>
+    </ul>
+    <div class="note" style="margin-top:11px;"><span class="k">Already funded</span>The Sept 1&ndash;7 heavy week (~$2,878) is covered by your Aug 27 pay + the $1,615 vault. It's paid for before it lands.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot" style="background:var(--blu)"></span>Your day</h2>
+    <ul class="rhythm">
+      <li><span class="tm">5:45&ndash;6:20</span><span>Coffee, breakfast wrap, hair, grab gear, out the door. No drive-thru.</span></li>
+      <li><span class="tm">Midday</span><span>Lunch from the bag &mdash; works your food allowance for you.</span></li>
+      <li><span class="tm">3:30&ndash;5</span><span>Drive home. Zehrs stop: one rotisserie chicken.</span></li>
+      <li><span class="tm">Evening</span><span>Close the loops &mdash; emails, quotes, to-dos out.</span></li>
+      <li class="you"><span class="tm">~7pm &rarr;</span><span><strong>Yours.</strong> Rest, game, your show. No guilt.</span></li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <span class="k">Wins in the bank this week</span>
+    <strong>Hit the $500 dad-goal (keeps $800 waived)</strong> &middot; killed the $10/day McDonald's &middot; bought vapes in bulk &middot; meal-prepped &middot; moved $1,615 to the CIBC vault &middot; detailed the car. That's a lot of control taken back in a few days.
+  </div>
+
+  <p class="foot">Snapshot as of Aug 17 &mdash; I refresh the numbers when you send new ones. The big life planner has the full detail; this is just today.</p>
+
+</div>
+</body>
+</html>

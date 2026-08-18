@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Long Game — Investing in Plain English</title>
+<style>
+  :root, .viz-root {
+    --surface-1:#ffffff; --surface-2:#f4f3ef; --page:#f8f7f3;
+    --text:#14140f; --text2:#55534c; --muted:#8f8d84;
+    --grid:#e6e4dc; --base:#cbc9bf; --border:rgba(20,20,15,0.10);
+    --green:#12a06f; --blue:#2a78d6; --amber:#b4530a; --violet:#7a5cc4;
+    --good:#0f9a4f; --warn:#d99414; --crit:#d33b3b;
+  }
+  @media (prefers-color-scheme: dark){ .viz-root{
+    --surface-1:#1b1b19; --surface-2:#232320; --page:#101010;
+    --text:#f6f5f0; --text2:#c3c1b7; --muted:#8f8d84;
+    --grid:#2c2c28; --base:#3a3a35; --border:rgba(255,255,255,0.10);
+    --green:#1cbd85; --blue:#4a92e8; --amber:#e0812f; --violet:#9b81e0; --good:#26b85f;
+  }}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--page);
+    color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 60px;}
+  header.hero{margin:16px 0 14px;padding:22px 20px;border-radius:18px;border:1px solid var(--border);
+    background:radial-gradient(120% 140% at 0% 0%,rgba(18,160,111,0.16),transparent 55%),
+      radial-gradient(120% 140% at 100% 0%,rgba(42,120,214,0.14),transparent 55%),var(--surface-1);}
+  header.hero .eyebrow{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);font-weight:700;}
+  header.hero h1{font-size:24px;margin:6px 0 4px;letter-spacing:-0.02em;}
+  header.hero .sub{color:var(--text2);font-size:14px;}
+  .toolbar{display:flex;justify-content:flex-end;margin:4px 0 0;}
+  button.btn{font-family:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:9px;
+    border:1px solid var(--border);background:var(--surface-1);color:var(--text);cursor:pointer;}
+  .card{background:var(--surface-1);border:1px solid var(--border);border-radius:15px;padding:18px 18px 15px;margin-bottom:13px;}
+  .card.tinted{background:var(--surface-2);}
+  .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;
+    background:var(--green);color:#fff;font-size:13px;font-weight:700;margin-right:9px;flex-shrink:0;}
+  .card h2{font-size:17px;margin:0 0 8px;letter-spacing:-0.01em;display:flex;align-items:center;}
+  .card h2 .t{display:inline-block;}
+  .card p{font-size:14px;color:var(--text2);margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .card strong{color:var(--text);}
+  .lead{font-size:14.5px;color:var(--text);}
+  .callout{border-radius:12px;padding:13px 15px;margin:12px 0 4px;font-size:13.5px;color:var(--text2);
+    border:1px solid var(--border);background:var(--surface-2);}
+  .callout .k{font-size:11px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;display:block;margin-bottom:3px;}
+  .callout.good{border-color:rgba(15,154,79,0.4);} .callout.good .k{color:var(--good);}
+  .callout.warn{border-color:rgba(217,148,20,0.5);} .callout.warn .k{color:var(--warn);}
+  .callout.crit{border-color:rgba(211,59,59,0.4);} .callout.crit .k{color:var(--crit);}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px;}
+  th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.03em;
+    border-bottom:1px solid var(--base);padding:8px;font-weight:700;}
+  td{padding:9px 8px;border-bottom:1px solid var(--grid);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
+  @media (max-width:560px){.vs{grid-template-columns:1fr;}}
+  .vsbox{border:1px solid var(--border);border-radius:12px;padding:13px 14px;}
+  .vsbox h4{margin:0 0 6px;font-size:14px;}
+  .vsbox.invest{border-color:rgba(18,160,111,0.5);} .vsbox.invest h4{color:var(--green);}
+  .vsbox.trade{border-color:rgba(217,148,20,0.5);} .vsbox.trade h4{color:var(--warn);}
+  .vsbox ul{margin:0;padding-left:18px;font-size:13px;color:var(--text2);}
+  .vsbox li{margin-bottom:4px;}
+  ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:s;}
+  ol.steps li{counter-increment:s;position:relative;padding:11px 0 11px 40px;border-bottom:1px solid var(--grid);font-size:14px;}
+  ol.steps li:last-child{border-bottom:none;}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:10px;width:27px;height:27px;
+    background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+  ol.steps li strong{display:block;}
+  ol.steps li span{color:var(--text2);font-size:13px;}
+  .foot{font-size:12px;color:var(--muted);margin-top:16px;padding-top:12px;border-top:1px solid var(--grid);}
+  @media print{.toolbar,.no-print{display:none!important;}}
+</style>
+</head>
+<body class="viz-root">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Financial literacy</div>
+    <h1>The Long Game</h1>
+    <div class="sub">Investing in plain English &mdash; how regular people turn income into wealth, and where it fits in your plan. Written for Canada.</div>
+  </header>
+
+  <div class="toolbar no-print"><button class="btn" onclick="window.print()">Print / Save as PDF</button></div>
+
+  <div class="card tinted">
+    <p class="lead" style="margin:0;">The whole guide in one breath: <strong>you can't out-earn your way to security, but you can out-grow your way there.</strong> Money that just sits loses value to inflation every year. Money that's invested buys tiny pieces of real businesses that grow, pay you, and compound. You don't need to be smart, lucky, or watch charts &mdash; you need time, consistency, and to not do anything dumb. This explains the machine so it stops feeling like a secret club.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">1</span><span class="t">Trading vs investing &mdash; not the same thing</span></h2>
+    <p>People blur these together, and it costs them. They're different activities with different odds.</p>
+    <div class="vs">
+      <div class="vsbox invest">
+        <h4>Investing (the wealth plan)</h4>
+        <ul>
+          <li>Buy pieces of the whole economy, hold for <strong>years/decades</strong></li>
+          <li>Boring on purpose &mdash; you basically ignore it</li>
+          <li>Time does the work, not skill</li>
+          <li>Historically grows ~7%/yr on average over long stretches</li>
+          <li>The proven way normal people build wealth</li>
+        </ul>
+      </div>
+      <div class="vsbox trade">
+        <h4>Day trading (the hobby)</h4>
+        <ul>
+          <li>Bet on short-term price wiggles, in and out fast</li>
+          <li>Active, stressful, needs constant attention</li>
+          <li>The <strong>majority of retail traders lose</strong> over time</li>
+          <li>Closer to a skill-based gamble than an investment</li>
+          <li>Fine to learn with play money &mdash; not the plan</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout warn"><span class="k">Keep them in separate buckets</span>
+      Learning day trading is fine as a hobby with money you can lose. But it is <strong>not</strong> how you build your family's foundation. When someone says "invest so your money grows," they mean the left box. Don't let the fun one crowd out the one that actually works.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span><span class="t">What a "stock" actually is</span></h2>
+    <p>A <strong>share</strong> (or stock) is a tiny piece of ownership in a real company. Buy one share of a company and you literally own a sliver of it &mdash; its buildings, its brand, its future profits. If the company grows and earns more, your sliver becomes worth more, and many companies pay you a slice of profit along the way (a <strong>dividend</strong>).</p>
+    <p>So you're not "betting on a number." You're becoming a part-owner of businesses that sell things to millions of people every day. That's the mental shift: investing is <em>owning</em>, not <em>gambling</em>.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span><span class="t">The real engine: compounding + time</span></h2>
+    <p>This is the whole magic trick. When your money earns a return, that return <em>also</em> starts earning. Your money makes money, and then that money makes money too. It snowballs &mdash; slow at first, then shockingly fast.</p>
+    <p>And the biggest lever isn't how much you invest &mdash; it's <strong>how long</strong>. An example (assuming a ~7% average yearly growth, roughly the long-run market average):</p>
+    <table>
+      <tr><th>You invest</th><th>For</th><th>Becomes about</th></tr>
+      <tr><td>$200/month</td><td>10 years</td><td>~$34,000 <span style="color:var(--muted)">(you put in $24k)</span></td></tr>
+      <tr><td>$200/month</td><td>20 years</td><td>~$104,000 <span style="color:var(--muted)">(you put in $48k)</span></td></tr>
+      <tr><td>$200/month</td><td>30 years</td><td>~$243,000 <span style="color:var(--muted)">(you put in $72k)</span></td></tr>
+    </table>
+    <div class="callout good"><span class="k">Read that table again</span>
+      Same $200/month. The difference between the rows is <em>only time</em>. Over 30 years you put in $72k and it turns into a quarter-million &mdash; the other ~$171k is compounding doing the work while you sleep. This is why starting small <strong>now</strong> beats starting big "later." You're 20-something with a kid; time is the one asset you have the most of.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span><span class="t">You don't pick winners &mdash; you buy everything</span></h2>
+    <p>Here's the thing nobody believes their first year: <strong>you almost certainly can't pick which company will win, and you don't need to.</strong> Even most professional stock-pickers fail to beat the simple average over time.</p>
+    <p>So instead of betting on one company (risky &mdash; it could flop), you buy a tiny slice of <em>hundreds or thousands of them at once</em>. If a few flop, the winners more than carry them. You stop trying to find the needle and just buy the whole haystack. That's called <strong>index investing</strong>, and it's the closest thing to a free lunch in finance.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">5</span><span class="t">The tool for that: an ETF</span></h2>
+    <p>An <strong>ETF</strong> (exchange-traded fund) is a single basket you can buy like one stock, but inside it are hundreds or thousands of companies. Buy one "total market" or "S&amp;P 500" ETF and in one click you own a slice of basically the whole economy &mdash; instantly diversified.</p>
+    <p>There are even <strong>all-in-one</strong> ETFs built for exactly this: one fund that holds the entire world's stock market, automatically balanced for you. For a beginner who wants "set it and forget it," a single broad, low-fee, all-in-one ETF is often all you ever need. (Common Canadian examples people research: broad all-in-one funds like VEQT or XEQT, or an S&amp;P 500 fund like VFV. Names for study, not a recommendation &mdash; see the disclaimer.)</p>
+    <div class="callout"><span class="k">Watch the fee</span>
+      ETFs charge a tiny yearly fee called the <strong>MER</strong>. Broad index ETFs are cheap (often ~0.2% or less). Avoid old-school mutual funds that charge 2%+ &mdash; that difference quietly eats a fortune over decades. Cheap and boring wins.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span><span class="t">The accounts are the cheat code (Canada)</span></h2>
+    <p>This is the part most people underuse. <em>Where</em> you hold your investments changes how much tax you pay &mdash; and some accounts literally hand you free money. Same ETF, different account, wildly different result. These are <strong>wrappers</strong>, not investments themselves &mdash; you open the account, then buy your ETF inside it.</p>
+    <table>
+      <tr><th>Account</th><th>What it does</th><th>2026 room</th></tr>
+      <tr><td><strong>RESP</strong><br><span style="color:var(--muted)">for your kid</span></td><td>Government <strong>adds 20%</strong> on your contributions. Free money.</td><td>20% match up to <strong>$500/yr</strong> ($2,500 in), $7,200 lifetime</td></tr>
+      <tr><td><strong>FHSA</strong><br><span style="color:var(--muted)">first home</span></td><td>Tax-deductible going in <em>and</em> tax-free coming out for a home. Best of both.</td><td><strong>$8,000/yr</strong>, $40,000 lifetime</td></tr>
+      <tr><td><strong>TFSA</strong><br><span style="color:var(--muted)">everything</span></td><td>Grows 100% <strong>tax-free</strong>, pull it out anytime with no penalty. Most flexible.</td><td><strong>$7,000/yr</strong> (plus all unused room since age 18)</td></tr>
+      <tr><td><strong>RRSP</strong><br><span style="color:var(--muted)">retirement</span></td><td>Cuts your taxable income now (bigger refund), taxed later when you withdraw.</td><td>18% of your income (cap well above what you'd use)</td></tr>
+    </table>
+    <div class="callout good"><span class="k">The two with instant, guaranteed returns</span>
+      The <strong>RESP</strong> gives you a <strong>20% return the day you contribute</strong> (the government match) &mdash; nothing in the market beats that. The <strong>FHSA</strong> gives you a tax deduction <em>and</em> tax-free growth toward the house you said felt out of reach. For you specifically, these two are gold once the debt's handled.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">7</span><span class="t">The only real way to lose</span></h2>
+    <p>The market doesn't go straight up &mdash; it drops sometimes, sometimes hard, and always temporarily on a long enough timeline. A 20% drop feels like the sky falling. Here's the truth: <strong>a drop isn't a loss until you sell.</strong> If you hold, history says it recovers and goes on to new highs. Every crash in history, so far, was eventually a dip on the chart.</p>
+    <p>So the only way to actually lose at long-term index investing is to <strong>panic and sell low</strong>, or to need the money at the wrong time. That's why you only invest money you won't touch for <strong>5+ years</strong>, and why the emergency fund comes first &mdash; so a bad month never forces you to sell. The winning move is almost always: <em>do nothing.</em> Don't even check it daily.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">8</span><span class="t">Where day trading honestly fits for you</span></h2>
+    <p>You're already poking at it, so here's the straight version. Day trading is a legitimate <em>skill</em> to study, and there's nothing wrong with learning it as a hobby. But treat it like poker, not like a paycheck: the majority who try it lose money, and even the good ones grind for it. It is a fun side-quest, <strong>not</strong> the road to your family's security.</p>
+    <div class="callout crit"><span class="k">The rule that keeps it safe</span>
+      Only ever risk money you could set on fire without it touching rent, groceries, or the kid. Right now, with the 27% Visa alive and no emergency fund, that number is <strong>$0</strong> real dollars &mdash; so keep it to paper trading / a demo account until the foundation's built. The trading school we set up is the right home for that. This guide is the <em>other</em>, bigger track.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">9</span><span class="t">Your actual order of operations</span></h2>
+    <p>Don't invest a dollar out of order &mdash; the sequence is what makes it work. For your exact situation:</p>
+    <ol class="steps">
+      <li><strong>Kill the 27% Visa first</strong><span>Paying it off is a guaranteed 27% return &mdash; better than any investment on earth. This IS investing. (The CIBC 0% transfer buys you time to do it faster.)</span></li>
+      <li><strong>Build the emergency fund (~$10k / 3 months)</strong><span>So a bad month never forces you to sell investments or reach for a credit card. This is the floor everything else stands on.</span></li>
+      <li><strong>Grab the free RESP money</strong><span>Even $25&ndash;50/month gets you the 20% government match on your kid's account. Highest guaranteed return available to you, full stop.</span></li>
+      <li><strong>Feed the FHSA (and/or TFSA)</strong><span>Tax break now, tax-free growth toward the house. Buy one broad ETF inside it and automate a small monthly amount.</span></li>
+      <li><strong>Automate, then ignore it</strong><span>Set a fixed auto-transfer every payday into your one ETF. Boring, consistent, hands-off. Let time and compounding do the rest for the next 20&ndash;30 years.</span></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">10</span><span class="t">How to actually start (when it's time)</span></h2>
+    <p>The mechanics are simpler than the jargon suggests:</p>
+    <p>1) Open a <strong>brokerage account</strong> (in Canada, self-directed options people commonly use include Wealthsimple or Questrade, or the investing arm of your own bank). 2) Open the right <em>account type inside it</em> &mdash; RESP, FHSA, or TFSA. 3) Move a small amount in. 4) Buy <strong>one broad, low-fee ETF</strong>. 5) Set an <strong>automatic contribution</strong> every payday so you never have to decide again. That's it. That's the whole thing rich-in-30-years people actually do.</p>
+    <div class="callout"><span class="k">Learn more &mdash; genuinely good, plain-English sources</span>
+      Books: <strong>"The Wealthy Barber"</strong> (David Chilton) and <strong>"Millionaire Teacher"</strong> (Andrew Hallam) &mdash; both Canadian, both written for total beginners. Free: the <strong>Canadian Couch Potato</strong> blog/podcast is the go-to for simple index investing in Canada. Start with any one of these and you'll be ahead of most people.</div>
+  </div>
+
+  <div class="card tinted">
+    <p style="margin:0;font-size:14px;color:var(--text);"><strong>Bottom line:</strong> the people who build wealth on normal incomes almost never do it by picking hot stocks or day trading. They do it by paying off high-interest debt, then quietly buying a boring index fund inside a tax-smart account, every single payday, for decades. It's not exciting. It just works. You have the biggest ingredient &mdash; time. Protect it, and start the moment the debt's dead.</p>
+  </div>
+
+  <p class="foot">
+    Educational information only, written for your situation in Ontario, Canada &mdash; not personalized financial advice, and I'm not a licensed financial advisor. Specific fund names are examples for your own research, not recommendations. 2026 account limits are current as of writing but can change; verify the numbers before you act, and consider a one-time chat with a fee-only (advice-only) advisor once you're ready to invest real money.
+  </p>
+</div>
+</body>
+</html>

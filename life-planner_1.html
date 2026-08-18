@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steven's Life Plan</title>
+<style>
+  /* Dark mode is now the default look (near-black bg, light text) */
+  :root.viz-root, .viz-root {
+    --surface-1:      #17181c;
+    --surface-2:      #1f2126;
+    --page:           #0b0c0f;
+    --text-primary:   #f4f5f7;
+    --text-secondary: #b8bcc6;
+    --muted:          #838894;
+    --gridline:       #2a2d34;
+    --baseline:       #3a3e47;
+    --border:         rgba(255,255,255,0.10);
+
+    --cat-now:        #f0913a; /* amber   - command */
+    --cat-health:     #56a0f5; /* blue    - body */
+    --cat-financial:  #24c98d; /* green   - money */
+    --cat-personal:   #a78bf0; /* violet  - life */
+    --cat-hobbies:    #eda52a; /* gold    - grow */
+
+    --seq-100: #cde2fb; --seq-450: #56a0f5; --seq-650: #104281;
+
+    --good:     #2bc463;
+    --warning:  #eaa62c;
+    --serious:  #ef8a52;
+    --critical: #ef5b5b;
+  }
+  /* If someone's device is in LIGHT mode, keep this planner dark anyway — that's the chosen look */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 15px 64px; }
+
+  /* ---------- Hero ---------- */
+  header.hero {
+    margin: 16px 0 14px;
+    padding: 28px 22px 22px;
+    border-radius: 22px;
+    background:
+      radial-gradient(135% 150% at 0% 0%, rgba(37,99,235,0.55), transparent 60%),
+      radial-gradient(140% 150% at 100% 15%, rgba(16,185,129,0.42), transparent 60%),
+      radial-gradient(120% 120% at 90% 100%, rgba(249,115,22,0.30), transparent 55%),
+      #0c1018;
+    border: 1px solid rgba(255,255,255,0.10);
+    color: #fff;
+    box-shadow: 0 12px 30px -12px rgba(12,16,24,0.55);
+  }
+  header.hero .eyebrow { font-size: 11.5px; text-transform: uppercase; letter-spacing: .12em; color: #7dd3fc; font-weight: 800; }
+  header.hero h1 { font-size: 29px; margin: 7px 0 5px; letter-spacing: -0.03em; font-weight: 800; color:#fff; }
+  header.hero .sub { color: rgba(255,255,255,0.74); font-size: 13.5px; }
+  header.hero .phaseline { margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.82); display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+    background: rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.10); padding:9px 12px; border-radius:12px; }
+
+  /* ---------- Tiles ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin: 14px 0 6px; }
+  @media (max-width: 640px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  .tile {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 13px;
+    padding: 13px 13px 11px;
+  }
+  .tile .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; font-weight:600; }
+  .tile { position: relative; overflow: hidden; }
+  .tile::before { content:""; position:absolute; left:0; top:0; height:3px; width:100%; background: linear-gradient(90deg, var(--cat-financial), var(--cat-health)); opacity:.9; }
+  .tile .value { font-size: 25px; font-weight: 800; margin-top: 6px; line-height: 1.03; letter-spacing:-0.02em; }
+  .tile .value.good { color: var(--good); }
+  .tile .foot { font-size: 11.5px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* ---------- Tabs ---------- */
+  .tab-radio { display: none; }
+  nav.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 16px 0 16px; position: sticky; top: 0; z-index: 5;
+    background: linear-gradient(var(--page) 70%, transparent); padding: 8px 0; }
+  nav.tabs label {
+    display: inline-flex; align-items:center; gap:6px;
+    font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+    padding: 9px 15px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--surface-1); color: var(--text-secondary);
+    -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
+  }
+  #tab-now:checked       ~ nav.tabs label[for="tab-now"]       { background: var(--cat-now); color:#fff; border-color: transparent; }
+  #tab-money:checked     ~ nav.tabs label[for="tab-money"]     { background: var(--cat-financial); color:#fff; border-color: transparent; }
+  #tab-budget:checked    ~ nav.tabs label[for="tab-budget"]    { background: #0f766e; color:#fff; border-color: transparent; }
+  #tab-plan:checked      ~ nav.tabs label[for="tab-plan"]      { background: #5b6470; color:#fff; border-color: transparent; }
+  #tab-body:checked      ~ nav.tabs label[for="tab-body"]      { background: var(--cat-health); color:#fff; border-color: transparent; }
+  #tab-life:checked      ~ nav.tabs label[for="tab-life"]      { background: var(--cat-personal); color:#fff; border-color: transparent; }
+  #tab-grow:checked      ~ nav.tabs label[for="tab-grow"]      { background: var(--cat-hobbies); color:#fff; border-color: transparent; }
+
+  section.panel { display: none; animation: fade .2s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  #tab-now:checked   ~ #panel-now,
+  #tab-money:checked ~ #panel-money,
+  #tab-budget:checked ~ #panel-budget,
+  #tab-plan:checked ~ #panel-plan,
+  #tab-body:checked  ~ #panel-body,
+  #tab-life:checked  ~ #panel-life,
+  #tab-grow:checked  ~ #panel-grow { display: block; }
+
+  /* ---------- Cards ---------- */
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 15px;
+    padding: 17px 17px 15px; margin-bottom: 13px;
+  }
+  .card.tinted { background: var(--surface-2); }
+  .card h2 { font-size: 17.5px; font-weight: 800; margin: 0 0 4px; display: flex; align-items: center; gap: 8px; letter-spacing:-0.02em; }
+  .card h2 .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink:0; }
+  .card .desc { color: var(--text-secondary); font-size: 13.5px; margin: 0 0 12px; }
+  .card h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 18px 0 8px; font-weight:700; }
+  .card h3:first-of-type { margin-top: 6px; }
+
+  /* highlight card (the one move) */
+  .spotlight { border: 1px solid transparent;
+    background:
+      linear-gradient(var(--surface-1), var(--surface-1)) padding-box,
+      linear-gradient(120deg, var(--cat-financial), var(--cat-health)) border-box;
+    border: 1.5px solid transparent; border-radius: 15px; padding: 17px; margin-bottom: 13px; }
+
+  /* ---------- Pills ---------- */
+  .pill { display: inline-block; font-size: 10.5px; font-weight: 800; padding: 2px 8px; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: .04em; vertical-align: middle; }
+  .pill.done { background: rgba(15,154,79,0.15); color: var(--good); }
+  .pill.now  { background: rgba(180,83,10,0.15); color: var(--cat-now); }
+  .pill.next { background: rgba(42,120,214,0.15); color: var(--cat-health); }
+  .pill.hold { background: var(--gridline); color: var(--muted); }
+  .pill.warn { background: rgba(217,148,20,0.16); color: var(--warning); }
+
+  /* ---------- Progress ---------- */
+  .progress-track { height: 12px; border-radius: 999px; background: var(--gridline); overflow: hidden; margin: 9px 0 5px; }
+  .progress-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #2563eb, #10b981); box-shadow: 0 0 10px -2px rgba(16,185,129,0.6); }
+  .progress-caption { font-size: 12px; color: var(--text-secondary); display: flex; justify-content: space-between; }
+
+  /* ---------- Goal list ---------- */
+  ul.goals { list-style: none; margin: 0; padding: 0; }
+  ul.goals li { display: flex; align-items: flex-start; gap: 11px; padding: 10px 0; border-bottom: 1px solid var(--gridline); font-size: 14px; }
+  ul.goals li:last-child { border-bottom: none; }
+  ul.goals li input[type="checkbox"] { margin-top: 2px; width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--cat-financial); }
+  ul.goals li .txt strong { display: block; font-size: 14px; font-weight:650; }
+  ul.goals li .txt span { color: var(--text-secondary); font-size: 12.5px; }
+
+  /* ---------- Rhythm blocks ---------- */
+  .rhythm { display: grid; gap: 10px; }
+  .rblock { border: 1px solid var(--border); border-left: 4px solid var(--muted); border-radius: 12px; padding: 12px 14px; }
+  .rblock .tag { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; }
+  .rblock .head { font-weight: 650; font-size: 14.5px; margin: 3px 0 4px; }
+  .rblock .body { font-size: 13px; color: var(--text-secondary); }
+
+  /* ---------- Phases ---------- */
+  .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+  @media (max-width: 640px) { .phases { grid-template-columns: 1fr; } }
+  .phase { border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+  .phase .range { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+  .phase .name { font-weight: 650; font-size: 13.5px; margin: 3px 0 6px; }
+  .phase ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--text-secondary); }
+  .phase li { margin-bottom: 3px; }
+
+  /* ---------- Tables ---------- */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table th { text-align: left; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .03em;
+    border-bottom: 1px solid var(--baseline); padding: 7px 8px; font-weight:700; }
+  table td { padding: 9px 8px; border-bottom: 1px solid var(--gridline); vertical-align: top; }
+  table tr:last-child td { border-bottom: none; }
+
+  /* ---------- Callout ---------- */
+  .callout { border-radius: 12px; padding: 13px 15px; margin: 6px 0 12px; font-size: 13px; color: var(--text-secondary);
+    border: 1px solid var(--border); background: var(--surface-2); }
+  .callout .k { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; font-weight: 700; display:block; margin-bottom:3px; }
+  .callout.good { border-color: rgba(15,154,79,0.4); }
+  .callout.good .k { color: var(--good); }
+  .callout.warn { border-color: rgba(217,148,20,0.5); }
+  .callout.warn .k { color: var(--warning); }
+  .callout.crit { border-color: rgba(211,59,59,0.4); }
+  .callout.crit .k { color: var(--critical); }
+
+  /* ---------- Milestones ---------- */
+  .milestones { list-style: none; margin: 0; padding: 0; }
+  .milestones li { display: flex; gap: 11px; align-items: flex-start; padding: 8px 2px; border-bottom: 1px solid var(--gridline); }
+  .milestones li:last-child { border-bottom: none; }
+  .m-badge { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; border: 1.5px solid var(--baseline); color: var(--muted); margin-top: 1px; }
+  .m-badge.reached { background: var(--good); border-color: var(--good); color: #fff; }
+  .milestones .txt strong { font-size: 13.5px; display: block; }
+  .milestones .txt span { font-size: 12px; color: var(--text-secondary); }
+
+  /* ---------- Streak controls ---------- */
+  .streak-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+  .streak-controls label { font-size: 12.5px; color: var(--text-secondary); }
+  .streak-controls input[type="date"] { font-family: inherit; font-size: 13px; padding: 6px 8px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--page); color: var(--text-primary); }
+
+  textarea, input[type="text"], input[type="number"] { font-family: inherit; font-size: 13.5px; width: 100%; padding: 9px 11px;
+    border-radius: 9px; border: 1px solid var(--border); background: var(--page); color: var(--text-primary); margin-top: 4px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+  .field label { font-size: 12.5px; color: var(--text-secondary); font-weight: 600; }
+  .calc-out { margin-top: 11px; padding: 11px 13px; background: var(--surface-2); border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px; }
+
+  .weekgrid { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .weekgrid th, .weekgrid td { border: 1px solid var(--gridline); padding: 7px 4px; text-align: center; }
+  .weekgrid th { background: var(--surface-2); color: var(--muted); font-weight: 700; font-size: 10.5px; text-transform: uppercase; }
+  .weekgrid td:first-child { text-align: left; font-weight: 600; padding-left:8px; }
+  .weekgrid input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--cat-health); }
+
+  .footnote { font-size: 12px; color: var(--muted); margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--gridline); }
+  .toolbar { display: flex; justify-content: flex-end; gap: 8px; margin: 4px 0 0; }
+  button.btn { font-family: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 9px;
+    border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary); cursor: pointer; }
+
+  @media print {
+    nav.tabs, .toolbar, .no-print { display: none !important; }
+    section.panel { display: block !important; page-break-after: always; }
+    header.hero { background: var(--surface-1); }
+  }
+
+  /* donut (static, no-JS) */
+  .dwrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .donut{width:150px;height:150px;border-radius:50%;flex-shrink:0;position:relative;}
+  .donut::after{content:"";position:absolute;inset:27px;background:var(--surface-1);border-radius:50%;}
+  .donut .ctr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .donut .ctr b{font-size:18px;letter-spacing:-.01em;}
+  .donut .ctr span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+  .dleg{flex:1;min-width:210px;}
+  .drow{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:13px;}
+  .drow .dd{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+  .drow .nn{flex:1;}.drow .aa{font-weight:700;font-variant-numeric:tabular-nums;}
+  .drow .pp{color:var(--muted);font-size:11.5px;width:36px;text-align:right;}
+
+  .mtoggle{display:flex;gap:8px;margin:0 0 13px;}
+  .mtoggle label{flex:1;text-align:center;padding:10px;border-radius:12px;border:1px solid var(--border);background:var(--surface-1);color:var(--text-secondary);font-weight:700;font-size:13px;cursor:pointer;}
+  #mm-jul:checked ~ .mtoggle label[for="mm-jul"]{background:var(--cat-financial);color:#fff;border-color:transparent;}
+  #mm-aug:checked ~ .mtoggle label[for="mm-aug"]{background:var(--cat-financial);color:#fff;border-color:transparent;}
+  .mpan{display:none;}
+  #mm-jul:checked ~ #mmp-jul{display:block;}
+  #mm-aug:checked ~ #mmp-aug{display:block;}
+</style>
+</head>
+<body class="viz-root">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Take the wheel</div>
+    <h1>Steven's Life Plan</h1>
+    <div class="sub">Now &middot; Money &middot; Budget &middot; Plan &middot; Body &middot; Life &middot; Grow &mdash; everything in one place.</div>
+    <div class="phaseline">
+      <span class="pill now" id="phasePill">Momentum</span>
+      <span id="phaseText">Control over yourself, one block at a time. You already started &mdash; keep stacking wins.</span>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <div class="tiles">
+    <div class="tile">
+      <div class="label">Next bill</div>
+      <div class="value" id="tileNextBill" style="font-size:15px;">&mdash;</div>
+      <div class="foot" id="tileNextBillFoot">&mdash;</div>
+    </div>
+    <div class="tile">
+      <div class="label">Free &amp; clear</div>
+      <div class="value good" id="tileFree" style="font-size:20px;">&mdash;</div>
+      <div class="foot">since Jul 11 &mdash; no urge, no going back</div>
+    </div>
+    <div class="tile">
+      <div class="label">Credit score</div>
+      <div class="value good" style="font-size:20px;">715 <span style="font-size:12px;font-weight:700;">Good</span></div>
+      <div class="foot">up from 630 Fair &mdash; climbs more as the Visa drops</div>
+    </div>
+    <div class="tile">
+      <div class="label">Plan progress</div>
+      <div class="value" id="tilePlanPct" style="font-size:20px;">&mdash;</div>
+      <div class="foot" id="tilePlanFoot">&mdash;</div>
+    </div>
+  </div>
+  <p class="footnote no-print" style="text-align:center; border:none; padding-top:6px; margin-top:2px;">Next-bill, streak &amp; day-count tiles update themselves each time you open this. Dollar balances I refresh when you send new numbers &mdash; nothing saves automatically, so print a copy when you want a record.</p>
+
+  <input type="radio" name="tabgroup" id="tab-now" class="tab-radio" checked>
+  <input type="radio" name="tabgroup" id="tab-money" class="tab-radio">
+  <input type="radio" name="tabgroup" id="tab-budget" class="tab-radio">
+  <input type="radio" name="tabgroup" id="tab-plan" class="tab-radio">
+  <input type="radio" name="tabgroup" id="tab-body" class="tab-radio">
+  <input type="radio" name="tabgroup" id="tab-life" class="tab-radio">
+  <input type="radio" name="tabgroup" id="tab-grow" class="tab-radio">
+
+  <nav class="tabs no-print">
+    <label for="tab-now">Now</label>
+    <label for="tab-money">Money</label>
+    <label for="tab-budget">Budget</label>
+    <label for="tab-plan">Plan</label>
+    <label for="tab-body">Body</label>
+    <label for="tab-life">Life</label>
+    <label for="tab-grow">Grow</label>
+  </nav>
+
+  <!-- ============ NOW ============ -->
+  <section class="panel" id="panel-now">
+
+    <div class="card tinted">
+      <h2>Where you're at</h2>
+      <p class="desc" style="margin-bottom:10px;">
+        This started as crisis triage &mdash; quit weed, kill the 407, dodge the missed bills. That fight is <strong>won</strong>. Weed's behind you, the 407's gone, the phone's re-planned, the leaks are cut, credit's in "Good."
+        The scary part you named &mdash; "the list feels like it's ending" &mdash; is actually the good news: you're out of the hole. What's left isn't triage anymore, it's <strong>building</strong>. The deeper stuff (yourself, being present, the long game) now gets room it never had while you were putting out fires.
+      </p>
+      <div class="callout good" style="margin-bottom:0;">
+        <span class="k">The one thing to remember</span>
+        The plan doesn't run your life &mdash; the daily rhythm below does. Close <strong>one</strong> loop a night and the whole board clears in about a month. Not by working harder. Just by not leaving things open.
+      </div>
+    </div>
+
+    <div class="spotlight">
+      <h2 style="margin-bottom:6px;"><span class="pill now">Do first</span> &nbsp;This week's three</h2>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>When the CIBC card lands: activate it &amp; move the Visa to 0%</strong><span>The single biggest money move left. Transfers ~$1,391 off the 27% card. Everything else is small next to this.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Sign up for Instacart + SmartServe</strong><span>Your own idea for extra income. Both are quick online signups &mdash; do them in one evening block and they start paying.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Check the ~Aug 14 Telus bill</strong><span>Confirm the $460 buyout shows and that Easy Roam + Online Security dropped off the new plan. Also add your 25GB data before access cuts off.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Your daily routine &mdash; the system you built</h2>
+      <p class="desc">You set this up yourself, in one weekend. Clear blocks, your money working for you, and your own time protected at the end. This is what "control over myself" actually looks like.</p>
+      <div class="rhythm">
+        <div class="rblock" style="border-left-color:var(--cat-health);">
+          <div class="tag">5:45 &ndash; 6:20 AM &mdash; the launch</div>
+          <div class="head">Up, ready, fed, out the door</div>
+          <div class="body">Coffee made at home, breakfast wrap warmed up, hair done, gear grabbed (iPad, book, phone). No drive-thru, no coffee line. You killed the ~$10/day McDonald's run &mdash; that alone is roughly <strong>$200/month</strong> back in your pocket.</div>
+        </div>
+        <div class="rblock" style="border-left-color:var(--cat-now);">
+          <div class="tag">Workday &amp; the road</div>
+          <div class="head">Pure work = money. Lunch is packed.</div>
+          <div class="body">Visits, the route, commission &mdash; this funds everything else. Lunch comes from the bag now, so your <strong>$15/day food reimbursement works for you</strong> instead of leaking out at the drive-thru.</div>
+        </div>
+        <div class="rblock" style="border-left-color:var(--cat-financial);">
+          <div class="tag">3:30 &ndash; 5 PM &mdash; the drive home</div>
+          <div class="head">Zehrs stop: one rotisserie chicken</div>
+          <div class="body">Grab a rotisserie chicken on the way home &mdash; it becomes wraps and salads for days, and it's <strong>covered by your food allowance</strong>. Turning an expense you already get into free meals. Smart.</div>
+        </div>
+        <div class="rblock" style="border-left-color:var(--muted);">
+          <div class="tag">Evening &mdash; close the loops</div>
+          <div class="head">To-do list, emails, quotes out</div>
+          <div class="body">Knock out the day's open items &mdash; replies sent, quotes built and out the door. Finish it here so it doesn't follow you into your own time.</div>
+        </div>
+        <div class="rblock" style="border-left-color:var(--cat-personal); background:rgba(122,92,196,0.06);">
+          <div class="tag">~7 PM &rarr; bed &mdash; yours &#9733;</div>
+          <div class="head">Free and clear. No guilt.</div>
+          <div class="body">Your time &mdash; game, watch your show, rest. You built this into your own day <em>on purpose</em>. You're allowed to be a person here, not just a provider. This block isn't a reward you have to earn &mdash; it's just yours.</div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:12px;margin-bottom:0;border-color:rgba(122,92,196,0.4);"><span class="k" style="color:var(--cat-personal);">Open to change</span>Nothing here is set in stone &mdash; this is v1, the shape you're actually living right now. Tell me what's working and what isn't, and we'll adjust it together.</div>
+    </div>
+
+    <div class="card">
+      <h2>The bills &mdash; mapped to payday</h2>
+      <p class="desc">The front of the month is heavy, the back is light. Here's the whole run so nothing sneaks up on you. Tick each one as it clears.</p>
+
+      <h3><span class="pill done">Now &rarr; Aug 27</span> &nbsp;Light &mdash; you're covered</h3>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Car loan ~$303 &mdash; auto</strong><span>Pulls from chequing on its own. Nothing to do.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Student loan ~$25 &mdash; auto</strong><span>Biweekly, from chequing.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Rogers internet $143.99 &mdash; Aug 28</strong><span>Autopay. (The downgrade is still on your list to cut this ~$50.)</span></div></li>
+      </ul>
+      <div class="callout good"><span class="k">The vault</span>Your <strong>$1,615 stays parked at CIBC</strong>, untouched, for the September bills. Chequing (~$1,017) covers the auto-debits above on its own.</div>
+
+      <h3><span class="pill now">Sept 1 &ndash; 7</span> &nbsp;The heavy week</h3>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Rent $1,900 &mdash; Sept 1</strong></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Hydro $115.99 &mdash; Sept 2</strong><span>GrandBridge, acct &hellip;0324-04.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Insurance $402.88 &mdash; Sept 7</strong></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Telus buyout $460 &mdash; one-time</strong></div></li>
+      </ul>
+      <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+      <div class="progress-caption"><span>~$2,878 first week</span><span style="color:var(--good);font-weight:700;">funded &#10003;</span></div>
+      <p class="footnote" style="margin-top:8px;">Covered by your <strong>Aug 27 payday (~$2,912)</strong> + the <strong>$1,615 CIBC cushion</strong>. It's paid for before it even arrives &mdash; that's the whole point of the vault move.</p>
+    </div>
+
+    <div class="card">
+      <h2>The full board &mdash; everything open, in order</h2>
+      <p class="desc">Check things off as you go. The detail behind each lives on the area tabs.</p>
+
+      <h3><span class="pill now">Now</span> &nbsp;This week &mdash; quick, high-return</h3>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Activate CIBC &amp; run the 0% balance transfer</strong><span>Move the ~$1,391 Visa balance over, set CIBC's minimum to autopay. Kills the 27% interest.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Sign up: Instacart + SmartServe</strong><span>Extra-income on-ramps you flagged. Quick signups; SmartServe is a short online cert.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Confirm the 5 cancellations actually stopped billing</strong><span>Equifax, ID Assist, Crave, PS Plus, + check Telus Easy Roam / Online Security fell off. "Cancelled" isn't done until it stops pulling.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Add 25GB Telus data before access cuts off</strong><span>Call back and get it set &mdash; you lose data otherwise.</span></div></li>
+      </ul>
+
+      <h3><span class="pill next">This month</span></h3>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Call Rogers &mdash; downgrade internet (~$50/mo)</strong><span>You're on 1.5 Gbps at $144/mo &mdash; way more than you need. Drop to ~300&ndash;500 Mbps or ask for a new promo. Say you're thinking of leaving; that's when the deals come out. ~$600/yr back.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Get 2&ndash;3 auto-insurance requotes</strong><span>~$348/mo on the Jetta is high &mdash; possibly the biggest monthly win left. Try a broker + bundling home &amp; auto.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Get the benefits booklet from HR &mdash; then use it</strong><span>You already pay for group medical + dental. Book the dentist + a physical. It's covered; not using it is leaving money on the table.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Put the Telus bill on autopay too</strong><span>So reminders are a backstop, not the only thing between you and a missed bill.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Rebuild the rent buffer, then automate savings</strong><span>Step one: refill the set-aside so rent stops being a scramble. Then auto-move a set amount to CIBC each payday toward the ~$10k fund.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Plan one real date with Hannah</strong><span>Not logistics, not bills &mdash; time together on purpose. Small counts.</span></div></li>
+      </ul>
+
+      <h3><span class="pill hold">This quarter+</span> &nbsp;The deeper foundations</h3>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Open an RESP for your kid</strong><span>The government adds 20% on contributions (up to $500/yr free). Highest guaranteed return that exists for you &mdash; even $25/mo captures it.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Top up life insurance if the group amount is thin</strong><span>You have group Basic + Dependent Life through work &mdash; check the number with HR. Group base is often just 1&ndash;2&times; salary; add a small term policy if that's light for Hannah + kid + the car loan.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Set up a basic will + guardianship</strong><span>Non-negotiable once you have a child. Ontario has affordable online options &mdash; no big firm needed.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Book the Great Wolf Lodge trip</strong><span>Something to point the family at. Price it, pick a date, put it on the calendar.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Start a TFSA/FHSA once the Visa's gone</strong><span>Next horizon after the debt + e-fund. FHSA is the first-home account: tax-deductible in, tax-free out.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Recheck credit at 90 days</strong><span>715 now. As the Visa balance drops it climbs further. Free via TD or Credit Karma.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>The 90 days, at a glance</h2>
+      <div class="progress-track"><div class="progress-fill" id="overallBar" style="width:33%"></div></div>
+      <div class="progress-caption"><span id="overallCaption">Day &mdash; of 90</span><span id="overallPct">&mdash;</span></div>
+      <div class="phases" style="margin-top:14px;">
+        <div class="phase">
+          <div class="range" id="p1range">Jul 10 &ndash; Aug 08</div>
+          <div class="name">1 &middot; Foundation</div>
+          <ul>
+            <li style="color:var(--good);">&#10003; Quit weed &mdash; holding</li>
+            <li style="color:var(--good);">&#10003; 407 paid off</li>
+            <li style="color:var(--good);">&#10003; Every bill mapped + reminders</li>
+            <li style="color:var(--good);">&#10003; Phone re-planned, leaks cut</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="range" id="p2range">Aug 09 &ndash; Sep 07</div>
+          <div class="name">2 &middot; Momentum &nbsp;<span class="pill now">here</span></div>
+          <ul>
+            <li>Visa &rarr; 0% CIBC, then paid down</li>
+            <li>5 AM gym is a real habit</li>
+            <li>Side income started (Instacart/SmartServe)</li>
+            <li>Insurance requoted, benefits used</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <div class="range" id="p3range">Sep 08 &ndash; Oct 07</div>
+          <div class="name">3 &middot; Consolidation</div>
+          <ul>
+            <li>Visa gone or nearly</li>
+            <li>Rent buffer rebuilt, e-fund started</li>
+            <li>RESP + will in motion</li>
+            <li>Review, then set the next 90</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MONEY ============ -->
+  <section class="panel" id="panel-money">
+    <div class="card" style="background:var(--page);">
+      <h2 style="margin-bottom:6px;">The true story of your money</h2>
+      <p class="desc" style="margin-bottom:0;">Rebuilt from your real statements + pay stub. Your take-home <strong>pay</strong> and your <strong>reimbursement</strong> are two different things &mdash; only the first is money you earned. Toggle the month below to compare.</p>
+    </div>
+
+    <div class="tiles" style="margin-top:0;">
+      <div class="tile"><div class="label">Take-home pay</div><div class="value" style="font-size:19px;">$1,822</div><div class="foot">per cheque (salary + commission, net)</div></div>
+      <div class="tile"><div class="label">Reimbursement</div><div class="value" style="font-size:19px;">~$1,090</div><div class="foot">mileage + lunch &mdash; runs the car</div></div>
+      <div class="tile"><div class="label">Rent</div><div class="value" style="font-size:19px;">$1,900</div><div class="foot">e-transfer ~26th, from savings</div></div>
+      <div class="tile"><div class="label">Visa</div><div class="value" style="font-size:19px;">$1,390</div><div class="foot">27% &mdash; #1 target</div></div>
+    </div>
+
+    <input type="radio" name="moneymonth" id="mm-jul" class="tab-radio" checked>
+    <input type="radio" name="moneymonth" id="mm-aug" class="tab-radio">
+    <div class="mtoggle">
+      <label for="mm-jul">July (full month)</label>
+      <label for="mm-aug">August (so far)</label>
+    </div>
+
+    <div class="mpan" id="mmp-jul">
+      <div class="card">
+        <h2>Your money at a glance &mdash; July</h2>
+        <div class="dwrap">
+          <div class="donut" style="background:conic-gradient(#5b6470 0.0deg 94.6deg,#d33b3b 94.6deg 154.7deg,#12a06f 154.7deg 209.3deg,#e0812f 209.3deg 263.6deg,#2a78d6 263.6deg 308.1deg,#7a5cc4 308.1deg 324.4deg,#0f766e 324.4deg 338.6deg,#9a988f 338.6deg 349.8deg,#c9770e 349.8deg 360.0deg)"><div class="ctr"><b>$7,229</b><span>July</span></div></div>
+          <div class="dleg"><div class="drow"><span class="dd" style="background:#5b6470"></span><span class="nn">Rent</span><span class="aa">$1,900</span><span class="pp">26%</span></div><div class="drow"><span class="dd" style="background:#d33b3b"></span><span class="nn">Vapes / convenience</span><span class="aa">$1,205</span><span class="pp">17%</span></div><div class="drow"><span class="dd" style="background:#12a06f"></span><span class="nn">Groceries</span><span class="aa">$1,098</span><span class="pp">15%</span></div><div class="drow"><span class="dd" style="background:#e0812f"></span><span class="nn">Takeout</span><span class="aa">$1,089</span><span class="pp">15%</span></div><div class="drow"><span class="dd" style="background:#2a78d6"></span><span class="nn">Bills</span><span class="aa">$894</span><span class="pp">12%</span></div><div class="drow"><span class="dd" style="background:#7a5cc4"></span><span class="nn">Subscriptions</span><span class="aa">$328</span><span class="pp">5%</span></div><div class="drow"><span class="dd" style="background:#0f766e"></span><span class="nn">Health</span><span class="aa">$285</span><span class="pp">4%</span></div><div class="drow"><span class="dd" style="background:#9a988f"></span><span class="nn">Other debt</span><span class="aa">$225</span><span class="pp">3%</span></div><div class="drow"><span class="dd" style="background:#c9770e"></span><span class="nn">Household</span><span class="aa">$204</span><span class="pp">3%</span></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Vapes &amp; convenience &mdash; broken apart</h2>
+        <p class="desc" style="margin-bottom:8px;">$1,205 total in July. Split into what it really was:</p>
+        <table><tr><td><span class="dd" style="background:#d33b3b;display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;"></span>Nicotine / vapes</td><td class="amt">$885</td></tr><tr><td><span class="dd" style="background:#e0812f;display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;"></span>Convenience (snacks etc.)</td><td class="amt">$148</td></tr><tr><td><span class="dd" style="background:#7a5cc4;display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;"></span>Cannabis</td><td class="amt">$142</td></tr><tr><td><span class="dd" style="background:#0f766e;display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;"></span>Alcohol</td><td class="amt">$34</td></tr></table>
+        <p class="footnote" style="margin-top:8px;"><strong>39 stops</strong> in July &mdash; more than one a day. The nicotine is the big one ($885); the little snack stops ride along with it. Cut the number of trips and both fall together. (Cambridge GB filed under nicotine &mdash; unconfirmed, check a receipt.)</p>
+      </div>
+    </div>
+
+    <div class="mpan" id="mmp-aug">
+      <div class="card">
+        <h2>Your money at a glance &mdash; August (partial)</h2>
+        <p class="desc" style="margin-bottom:10px;">First 11 days only, and no paycheque landed yet &mdash; so totals are small. But the <em>shape</em> already tells the story.</p>
+        <div class="dwrap">
+          <div class="donut" style="background:conic-gradient(#5b6470 0.0deg 194.3deg,#2a78d6 194.3deg 269.2deg,#e0812f 269.2deg 293.5deg,#12a06f 293.5deg 315.8deg,#d33b3b 315.8deg 335.8deg,#7a5cc4 335.8deg 345.7deg,#9a988f 345.7deg 352.4deg,#c9770e 352.4deg 358.3deg,#0f766e 358.3deg 360.0deg)"><div class="ctr"><b>$3,520</b><span>Aug 1–11</span></div></div>
+          <div class="dleg"><div class="drow"><span class="dd" style="background:#5b6470"></span><span class="nn">Rent</span><span class="aa">$1,900</span><span class="pp">54%</span></div><div class="drow"><span class="dd" style="background:#2a78d6"></span><span class="nn">Bills</span><span class="aa">$732</span><span class="pp">21%</span></div><div class="drow"><span class="dd" style="background:#e0812f"></span><span class="nn">Takeout</span><span class="aa">$238</span><span class="pp">7%</span></div><div class="drow"><span class="dd" style="background:#12a06f"></span><span class="nn">Groceries</span><span class="aa">$218</span><span class="pp">6%</span></div><div class="drow"><span class="dd" style="background:#d33b3b"></span><span class="nn">Vapes / convenience</span><span class="aa">$195</span><span class="pp">6%</span></div><div class="drow"><span class="dd" style="background:#7a5cc4"></span><span class="nn">Subscriptions</span><span class="aa">$97</span><span class="pp">3%</span></div><div class="drow"><span class="dd" style="background:#9a988f"></span><span class="nn">Other debt</span><span class="aa">$66</span><span class="pp">2%</span></div><div class="drow"><span class="dd" style="background:#c9770e"></span><span class="nn">Household</span><span class="aa">$58</span><span class="pp">2%</span></div><div class="drow"><span class="dd" style="background:#0f766e"></span><span class="nn">Health</span><span class="aa">$17</span><span class="pp">0%</span></div></div>
+        </div>
+      </div>
+      <div class="card" style="border-color:var(--good);">
+        <h2>Vapes &amp; convenience &mdash; already dropping</h2>
+        <table><tr><td><span class="dd" style="background:#d33b3b;display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;"></span>Nicotine / vapes</td><td class="amt">$154</td></tr><tr><td><span class="dd" style="background:#e0812f;display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;"></span>Convenience (snacks etc.)</td><td class="amt">$41</td></tr><tr><td><span class="dd" style="background:#7a5cc4;display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;"></span>Cannabis <span class="pill done">→ $0 &#10003;</span></td><td class="amt">$0</td></tr><tr><td><span class="dd" style="background:#0f766e;display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;"></span>Alcohol</td><td class="amt">$0</td></tr></table>
+        <div class="callout good" style="margin-top:10px;"><span class="k">You're already winning this</span>
+          $195 in 11 days is a <strong>~$530/month pace</strong> &mdash; less than half of July's $1,205. And cannabis is holding at <strong>$0</strong> since you quit. You didn't need a perfect plan to start cutting; you're already doing it.</div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--page); border-color:var(--critical);">
+      <h2>The $1,000 target &mdash; vapes &amp; convenience</h2>
+      <p class="desc">This one category is your single biggest lever. Getting it from ~$1,200 down toward <strong>~$300/mo</strong> frees up close to <strong>$1,000 every month</strong> &mdash; straight into the Visa, then savings.</p>
+      <h3>The proof you can do it</h3>
+      <p class="desc" style="margin-bottom:12px;">You already took <strong>cannabis from $142 &rarr; $0</strong> and held it. Same playbook here: two levers.</p>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Fewer stops (kills the convenience + impulse)</strong><span>39 stops in July. Every stop is a chance to grab a vape + snack. Fewer trips = both drop together.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Buy nicotine in bulk at the reserve</strong><span>Cheaper per unit AND fewer trips. Turns 10 buys/month into 1&ndash;2.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>The horizon: quit vaping, on your terms</strong><span>Not this week &mdash; but you've proven you can zero a category. This is the next one, when you're ready.</span></div></li>
+      </ul>
+      <h3>This week &mdash; track the stops</h3>
+      <p class="footnote" style="margin-top:-2px;margin-bottom:8px;">Check a box each day you made <strong>zero</strong> mini-mart / vape stops. The streak is the goal.</p>
+      <table class="weekgrid">
+        <tr><th></th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th></tr>
+        <tr><td>No convenience stop</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+        <tr><td>Bought vapes only in bulk</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+      </table>
+    </div>
+
+    <div class="spotlight">
+      <h2 style="margin-bottom:6px;"><span class="dot" style="background:var(--cat-financial)"></span>The one move: kill the Visa</h2>
+      <p class="desc" style="margin-bottom:8px;">The Visa's ~$1,390 at 27% is the only debt actively working against you.</p>
+      <ol style="margin:0;padding-left:18px;font-size:13.5px;color:var(--text-secondary);">
+        <li style="margin-bottom:5px;">When the <strong>CIBC 0% card</strong> arrives, activate it and transfer the balance.</li>
+        <li style="margin-bottom:5px;">Set its minimum to autopay.</li>
+        <li>Throw the freed vape/convenience money at it &mdash; at 0%, every dollar hits the balance.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>Debts &mdash; priority order</h2>
+      <table>
+        <tr><th>Debt</th><th>Balance</th><th>Note</th></tr>
+        <tr><td>407 ETR</td><td style="color:var(--good);font-weight:600;">PAID &#10003;</td><td>Gone Jul 20.</td></tr>
+        <tr><td><strong>TD Visa</strong></td><td><strong>$1,390</strong></td><td><span class="pill now">#1</span> 27% &mdash; the CIBC 0% target.</td></tr>
+        <tr><td>Dad</td><td>$800</td><td>0% family.</td></tr>
+        <tr><td>Brother's PC</td><td>~$400</td><td>0% family.</td></tr>
+        <tr><td>Student loan</td><td>~$614</td><td>Nearly gone.</td></tr>
+        <tr><td>Car loan</td><td>~$38,886</td><td>5.29% &mdash; paid by your work reimbursement. Leave it.</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Emergency fund &mdash; the ladder</h2>
+      <ul class="goals">
+        <li><input type="checkbox" checked><div class="txt"><strong>&#10003; Caught up</strong><span style="color:var(--good);">Bills mapped, no longer behind.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Rebuild the rent set-aside</strong><span>The savings you pull rent from &mdash; keep it full.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>1 month of essentials (~$4,400)</strong><span>First real safety net.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>3 months (~$10k), automated</strong><span>The target.</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ BUDGET ============ -->
+  <section class="panel" id="panel-budget">
+    <div class="card" style="background:var(--page);">
+      <h2 style="margin-bottom:6px;">Your paycheck budget &mdash; the two streams</h2>
+      <p class="desc" style="margin-bottom:0;">The key insight from your pay stub: budget your <strong>life</strong> from your pay, and let the <strong>reimbursement</strong> run the car. Keeping them separate is what makes this honest.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot" style="background:var(--cat-financial)"></span>Stream 1 &mdash; your pay funds your life</h2>
+      <table>
+        <tr><th>Per cheque (~$1,822 take-home)</th><th class="amt"></th></tr>
+        <tr><td>Rent set-aside</td><td class="amt">$950</td></tr>
+        <tr><td>Home bills &divide; 2 (hydro, phone, internet, home ins.)</td><td class="amt">$180</td></tr>
+        <tr><td>Groceries</td><td class="amt">$460</td></tr>
+        <tr><td>Student loan</td><td class="amt">$25</td></tr>
+        <tr style="border-top:1.5px solid var(--baseline);"><td><strong>Left from your pay</strong></td><td class="amt" style="color:var(--warning);font-weight:700;">~$207</td></tr>
+      </table>
+      <p class="footnote" style="margin-top:6px;">$950 &times; 2 cheques = your $1,900 rent, in full, every month. What&rsquo;s left &mdash; about <strong>$207 a cheque</strong> &mdash; is your entire discretionary + Visa payoff + savings. That&rsquo;s the real number, and it&rsquo;s why the vape/takeout cut matters so much.</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot" style="background:#0f766e"></span>Stream 2 &mdash; reimbursement runs the car</h2>
+      <table>
+        <tr><th>Per cheque (~$1,090 reimbursement)</th><th class="amt"></th></tr>
+        <tr><td>Car loan</td><td class="amt">$303</td></tr>
+        <tr><td>Gas</td><td class="amt">~$168</td></tr>
+        <tr><td>Work lunches</td><td class="amt">$120</td></tr>
+        <tr><td>Toward auto insurance</td><td class="amt">~$174</td></tr>
+        <tr style="border-top:1.5px solid var(--baseline);"><td><strong>Roughly nets out</strong></td><td class="amt">&asymp; $0</td></tr>
+      </table>
+      <p class="footnote" style="margin-top:6px;">Your car essentially pays for itself out of what work reimburses you. So the car loan is <strong>off</strong> your personal budget &mdash; don&rsquo;t throw extra pay at it.</p>
+    </div>
+
+    <div class="callout warn" style="margin:0 0 13px;"><span class="k">The honest bottom line</span>
+      On your pay alone, after rent, bills and groceries, you&rsquo;ve got ~$207 a cheque. Hannah&rsquo;s contributions and commission spikes add real room on top &mdash; but leaning on them to cover basics is fragile. The one lever fully in your control is the discretionary spend.</div>
+
+    <p class="footnote">Every payday, in order: (1) move $950 to the rent account, (2) move $180 to bills, (3) keep groceries near $460, (4) the ~$207 left goes at the Visa, then savings. The reimbursement stays earmarked for the car &mdash; don&rsquo;t spend it as income.</p>
+  </section>
+
+  <!-- ============ PLAN ============ -->
+  <section class="panel" id="panel-plan">
+    <div class="card" style="background:var(--page);">
+      <h2 style="margin-bottom:6px;">The full financial plan</h2>
+      <p class="desc" style="margin-bottom:0;">The same ground an advisor covers &mdash; net worth, protection, retirement, home, kids, tax &mdash; on your real numbers.</p>
+    </div>
+
+    <div class="card">
+      <h2>Net worth &mdash; the starting line</h2>
+      <table>
+        <tr><td>What you owe (Visa, Dad, PC, student, car)</td><td class="amt">$42,155</td></tr>
+        <tr><td>Car value vs $38,886 loan</td><td class="amt"><span class="pill warn">underwater</span></td></tr>
+      </table>
+      <p class="footnote" style="margin-top:6px;">Negative for now, mostly because of the car loan &mdash; normal this early. The arrow is what matters, and yours points up: 407 gone, credit 630&rarr;715, spending finally visible.</p>
+    </div>
+
+    <div class="card">
+      <h2>Order of operations</h2>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>1. Kill the 27% Visa</strong><span>CIBC 0% transfer, then crush it with the freed vape/takeout money.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>2. Emergency fund &mdash; 1 month, then 3 (~$10k)</strong><span>So a bad month never puts you back on a card.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>3. Lock in protection</strong><span>Will + guardianship, confirm life &amp; disability coverage.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>4. RESP for your kid</strong><span>Government adds 20% &mdash; free money.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>5. FHSA + start investing</strong><span>Tax break + tax-free growth toward the house.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot" style="background:var(--cat-health)"></span>Protect (the part people skip)</h2>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Confirm life insurance amount</strong><span>You have group Basic + AD&amp;D + Dependent Life (small premiums = modest coverage). Ask HR the number; top up with cheap term if it&rsquo;s thin for a kid + $39k car.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Check disability / income protection</strong><span>Biggest one for commission income &mdash; if you can&rsquo;t work, it stops. See if work covers it.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Will + guardianship</strong><span>Non-negotiable now that you&rsquo;re a dad. Names who raises your kid. Affordable online in Ontario.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Requote home + auto</strong><span>$402.88/mo is high &mdash; possibly your biggest saving.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot" style="background:var(--cat-hobbies)"></span>Grow &amp; tax</h2>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>RESP &mdash; free 20% match</strong><span>Even $25/mo captures it. Best guaranteed return there is.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>FHSA for the house</strong><span>$8k/yr, tax-deductible in, tax-free out. Open once debt&rsquo;s clear.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>TFSA + one index fund</strong><span>Long-term investing (see "The Long Game" guide) &mdash; after the debt, automated.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Ask HR: pension/RRSP match?</strong><span>Free money if they match &mdash; worth confirming.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>T2200 &mdash; but mind the reimbursement</strong><span>Since work already pays your mileage + lunch, you can&rsquo;t double-deduct those. Might cover non-reimbursed bits (phone, home office). Quick ask, but don&rsquo;t count on a big refund.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Still to gather</h2>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Account balances</strong><span>Chequing, savings, CIBC, any TFSA/RRSP.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>The picture with Hannah</strong><span>How you split things &mdash; it changes the household plan &amp; insurance needs.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>House target</strong><span>Rough price + timeline, so we can back into a savings number.</span></div></li>
+      </ul>
+    </div>
+    <p class="footnote">Educational planning on your real numbers &mdash; not licensed investment, tax, or legal advice. For the big protection/investment calls, one session with a fee-only planner is worth it, and you&rsquo;ll walk in knowing the whole map.</p>
+  </section>
+
+  <!-- ============ BODY ============ -->
+  <section class="panel" id="panel-body">
+
+    <div class="card">
+      <h2><span class="dot" style="background:var(--cat-health)"></span>Body &mdash; the next block</h2>
+      <p class="desc">The weed fight is won &mdash; a foundation you stand on, not a daily battle. <strong>This week</strong> is about locking the food + money habits (the wraps, the coffee, the Zehrs chicken). <strong>Next week</strong> the evening workout comes in &mdash; you and Hannah landed on evenings over mornings, which fits your day better. One thing at a time.</p>
+
+      <h3>Won &mdash; a trophy, not a leash</h3>
+      <div class="streak-controls">
+        <label>Free since: <input type="date" id="quitDate" value="2026-07-11"></label>
+        <span id="streakSummary" style="font-size:13.5px;font-weight:700;">&mdash;</span>
+      </div>
+      <p class="desc" style="margin-top:8px; margin-bottom:0;">No urge, no going back &mdash; your words. You already did the single hardest thing on this whole plan; everything below is easier than this was.</p>
+
+      <h3>Milestones</h3>
+      <ul class="milestones" id="milestoneList"></ul>
+    </div>
+
+    <div class="card">
+      <h2>Health goals</h2>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Evening workout, 3&times;/week &mdash; starts next week</strong><span>You and Hannah decided evenings make more sense than a 5 AM scramble. This week: don't add it yet &mdash; just nail the food + spending. Next week: fold in the evening lifts. Program below when you're ready.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Protect your sleep for the 5:45 wake</strong><span>You're up at 5:45 &mdash; lights out around 10&ndash;10:30 gets you ~7 hrs. Set your gear (iPad, book, bag) by the door the night before so mornings are calm, not a scramble.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Eat 3 real meals &mdash; not one</strong><span>One meal a day is what leaves you lightheaded and reaching for fast food. See the fuel plan (separate doc) &mdash; protein ~1g per lb of goal weight, batch-cooked, seasoned so it isn't bland.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Run 2&times; a week</strong><span>Realistic and sustainable &mdash; two is a win, not a minimum.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Actually use your benefits</strong><span>Group medical + dental you're already paying for. Book the dentist, get a physical.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Quit vaping &mdash; your call, your pace</strong><span>Your goal, for you, when you're ready. One quit at a time. For now it's a harm-reduction hold you've made cheaper (reserve, bulk).</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Morning gym &mdash; the A/B program</h2>
+      <p class="desc" style="margin-bottom:8px;">Fits your ~50-min window, 3 mornings, alternating A/B. A complete beginner program &mdash; the muscle comes from <strong>adding weight over time</strong> + protein + showing up. Full detail is in your strength guide (separate doc).</p>
+      <table>
+        <tr><th>Day A</th><th>Day B</th></tr>
+        <tr><td>Squat</td><td>Romanian deadlift</td></tr>
+        <tr><td>Bench press</td><td>Overhead press</td></tr>
+        <tr><td>Seated row</td><td>Lat pulldown</td></tr>
+        <tr><td>Bicep curls</td><td>Triceps pushdown</td></tr>
+        <tr><td>Plank</td><td>Leg raises</td></tr>
+      </table>
+      <p class="footnote">5-min warm-up. Each move: <strong>3 sets of 8&ndash;12</strong>, ~60&ndash;90s rest. Hit 12 on all 3 sets &rarr; add a little weight (that's progressive overload). Alternate A/B/A one week, B/A/B the next. Give it 8&ndash;12 weeks before you judge it.</p>
+    </div>
+
+    <div class="card">
+      <h2>Weekly grid</h2>
+      <table class="weekgrid">
+        <tr><th></th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th></tr>
+        <tr><td>In bed on time</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+        <tr><td>Gym (aim 3&times;)</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+        <tr><td>Ran (aim 2&times;)</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+        <tr><td>Ate 3 meals</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+      </table>
+      <p class="footnote">A personal tool, not medical advice. If low mood ever feels heavier than a bad week, your benefits very likely cover counselling &mdash; that's what it's there for.</p>
+    </div>
+  </section>
+
+  <!-- ============ LIFE ============ -->
+  <section class="panel" id="panel-life">
+
+    <div class="card tinted" style="border-color:rgba(122,92,196,0.4);">
+      <h2 style="margin-bottom:6px;"><span class="dot" style="background:var(--cat-personal)"></span>Life &mdash; your why</h2>
+      <p class="desc" style="margin-bottom:10px;">This is the reason the other tabs exist. Read it on the hard days.</p>
+      <div style="font-size:16px; font-weight:600; line-height:1.55; color:var(--text-primary); padding:13px 15px; background:var(--surface-1); border-left:4px solid var(--cat-personal); border-radius:10px;">
+        &ldquo;My drive is to build a stable foundation for the family I've started &mdash; to provide for them, protect them, and give my kid a better starting line than I got &mdash; without losing the person I am in the process.&rdquo;
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>The deeper work &mdash; the part that scared you</h2>
+      <p class="desc">You said it yourself: it's not the bills that are heavy now, it's the stuff underneath. This is that layer &mdash; and it matters more than any number.</p>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Self-worth: it's the gap, not the person</strong><span>You told me it's not about who you are &mdash; it's that you're not where you thought you'd be. That's grief for an imagined timeline, not a verdict on you. The economy moved the goalposts on your whole generation; measure yourself against where you started (in a hole, now climbing out), not against a picture from years ago.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Procrastination: beat it with one loop a night</strong><span>Your biggest one, your words. You don't fix it with willpower &mdash; you fix it with a system small enough to never skip: one item, evening block, done. Momentum from finishing is the cure; the daily rhythm on the Now tab is built for exactly this.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Be present, not just a provider</strong><span>The money is one half. The half your kid will actually remember is a dad who was <em>there</em>. Both count as providing &mdash; and being present is the one you can give right now, for free.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Figure out what you want &mdash; from yourself, for yourself</strong><span>Not what you're supposed to want. This is the open question you named. No answer required today &mdash; just keep it on the page so it doesn't get buried under the to-do list again.</span></div></li>
+      </ul>
+      <h3>The parts of me I want back</h3>
+      <p class="desc" style="margin-bottom:4px;">Name the quirks or ways of being that felt like <em>you</em> before the grind. Naming them is step one to making room for them.</p>
+      <textarea rows="3" placeholder="the humour, the music, the thing I used to build, the version my friends knew..."></textarea>
+    </div>
+
+    <div class="card">
+      <h2>The relationship &mdash; tend it, don't just run the household</h2>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Plan a real date with Hannah</strong><span>One thing that isn't bills or logistics. She's your partner in all of this, not a line in the budget.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Book the Great Wolf Lodge trip</strong><span>A thing to point the family toward. Price it, pick a weekend, get it on the calendar so it's real.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Reconnect with one person who's drifted</strong><span>A friend or family member &mdash; one real conversation, not just a text.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>The house &mdash; a long game you've already started</h2>
+      <p class="desc" style="margin-bottom:8px;">You're right that the math changed &mdash; single-income ownership was real a couple generations ago and mostly isn't now, especially in KW/Cambridge. That's structural, not a failing of yours. "Long timeline" and "impossible" aren't the same thing. A house isn't one leap &mdash; it's a series of rungs, and you're already on them.</p>
+      <table>
+        <tr><th>Rung</th><th>Status</th></tr>
+        <tr><td>Kill high-interest debt (407, Visa)</td><td style="color:var(--good);font-weight:600;">407 done, Visa next</td></tr>
+        <tr><td>Credit into "Good" (660+)</td><td style="color:var(--good);font-weight:600;">Done &mdash; 715</td></tr>
+        <tr><td>Build the ~$10k safety fund</td><td>Next up (the savings ladder)</td></tr>
+        <tr><td>Open an FHSA once debt's clear</td><td>On-ramp &mdash; tax-deductible in, tax-free out</td></tr>
+        <tr><td>Down payment saved</td><td>The horizon &mdash; years, not never</td></tr>
+      </table>
+      <p class="footnote">Everything on the Money tab isn't separate from the house dream &mdash; it's the first rungs of the ladder to it. You started climbing weeks ago without calling it that.</p>
+    </div>
+  </section>
+
+  <!-- ============ GROW ============ -->
+  <section class="panel" id="panel-grow">
+
+    <div class="card tinted">
+      <h2><span class="dot" style="background:var(--cat-hobbies)"></span>Grow &mdash; downtime that pays back</h2>
+      <p class="desc" style="margin-bottom:10px;">You clocked it yourself: games are fun but leave you empty; a skill with upside doesn't. Off-hours are for building something &mdash; income now, a craft for later.</p>
+      <div class="callout" style="margin-bottom:0; border-color:rgba(201,119,14,0.4);">
+        <span class="k" style="color:var(--cat-hobbies);">The real finish line &mdash; Fable, Feb 23 2027</span>
+        ~6 months out. The goal isn't just to survive till then &mdash; it's to have your life together enough by launch day to sit down and enjoy it without guilt eating the whole thing. That counts as much as any number on the Money tab.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Side income &mdash; start now</h2>
+      <p class="desc">Real money, this month, no capital required. This is the fastest lever you've got.</p>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Sign up for Instacart shopping</strong><span>Flexible hours you can slot around the route and family time. Pays out fast.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Get your SmartServe certification</strong><span>Short online cert that opens serving/bartending + event gigs. Cheap, quick, keeps paying.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Point the extra income at the plan</strong><span>Every side-gig dollar &rarr; Visa first, then the ~$10k fund. Found money with a job to do.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>The money skill &mdash; trading (learn now, fund later)</h2>
+      <p class="desc" style="margin-bottom:8px;">Good instinct &mdash; and how you approach it decides whether it builds the foundation or cracks it. Full detail lives in your trading-school doc (separate chat).</p>
+      <div class="callout warn" style="margin-bottom:12px;">
+        <span class="k">Straight talk</span>
+        <strong>Only risk money you can lose completely.</strong> With the Visa at 27% and no e-fund, that number today is $0 &mdash; so learn and paper-trade free now, put real (small) money in only once the debt's dead and the fund exists. And "right 70% of the time" isn't profit if your losers are bigger than your winners &mdash; risk management is the actual skill. <em>(General info, not financial advice.)</em>
+      </div>
+      <ul class="goals">
+        <li><input type="checkbox"><div class="txt"><strong>Paper-trade &mdash; real skill, zero risk</strong><span>Demo account. Same learning, no money on the line while cash is tight. This is the whole game for now.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Keep a trade journal</strong><span>Why in, why out, what you felt. The journal is where the skill forms &mdash; it separates a learner from a gambler.</span></div></li>
+        <li><input type="checkbox"><div class="txt"><strong>Games: the treat, not the default</strong><span>Keep them for winding down with friends, capped, so they don't crowd out the skill-building.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Weekly downtime grid</h2>
+      <table class="weekgrid">
+        <tr><th></th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th></tr>
+        <tr><td>Side-income shift</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+        <tr><td>Learning block</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+        <tr><td>Games in check</td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <p class="footnote" style="text-align:center;">
+    Nothing here saves automatically &mdash; it's a live reference. Print or save as PDF when you want a record. Send me new numbers anytime and I'll refresh it.
+  </p>
+</div>
+
+<script>
+  // ---------- Dates & plan progress ----------
+  const PLAN_START = new Date('2026-07-10T00:00:00'); PLAN_START.setHours(0,0,0,0);
+  const PLAN_END = new Date(PLAN_START); PLAN_END.setDate(PLAN_END.getDate() + 90);
+  const fmt = d => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  const fmtShort = d => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+
+  function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
+  document.getElementById('p1range').textContent = fmtShort(PLAN_START) + ' – ' + fmtShort(addDays(PLAN_START,29));
+  document.getElementById('p2range').textContent = fmtShort(addDays(PLAN_START,30)) + ' – ' + fmtShort(addDays(PLAN_START,59));
+  document.getElementById('p3range').textContent = fmtShort(addDays(PLAN_START,60)) + ' – ' + fmtShort(addDays(PLAN_START,89));
+
+  function refreshPlanProgress() {
+    const now = new Date();
+    let dayNum = Math.floor((now - PLAN_START) / 86400000) + 1;
+    dayNum = Math.max(1, Math.min(90, dayNum));
+    const pct = Math.round((dayNum / 90) * 100);
+    document.getElementById('overallBar').style.width = pct + '%';
+    document.getElementById('overallCaption').textContent = 'Day ' + dayNum + ' of 90';
+    document.getElementById('overallPct').textContent = pct + '%';
+    document.getElementById('tilePlanPct').textContent = pct + '%';
+    document.getElementById('tilePlanFoot').textContent = 'Day ' + dayNum + ' of 90';
+    let phase = 'Foundation', phaseText = 'Putting out the fires and setting the base.';
+    if (dayNum > 60) { phase = 'Consolidation'; phaseText = 'Locking in the gains and setting what comes next.'; }
+    else if (dayNum > 30) { phase = 'Momentum'; phaseText = "You've cleared the fires. This is the part where you build."; }
+    document.getElementById('phasePill').textContent = phase;
+    document.getElementById('phaseText').textContent = phaseText;
+  }
+  refreshPlanProgress();
+
+  // ---------- Next upcoming bill ----------
+  function computeNextBill() {
+    const now = new Date(); now.setHours(0,0,0,0);
+    const monthly = [
+      {day:1,  name:'Rent',      amt:'$1,900'},
+      {day:2,  name:'Hydro',     amt:'$115.99'},
+      {day:7,  name:'Insurance', amt:'$402.88'},
+      {day:10, name:'Phone',     amt:'~$90'},
+      {day:17, name:'Visa (min)',amt:'$65.55'},
+      {day:24, name:'Internet',  amt:'~$85'}
+    ];
+    const cands = [];
+    monthly.forEach(function(b){
+      var d = new Date(now.getFullYear(), now.getMonth(), b.day);
+      if (d < now) d = new Date(now.getFullYear(), now.getMonth()+1, b.day);
+      cands.push({date:d, name:b.name, amt:b.amt});
+    });
+    var car = new Date(2026,6,31); car.setHours(0,0,0,0); // Jul 31 2026, biweekly
+    while (car < now) car.setDate(car.getDate()+14);
+    cands.push({date:car, name:'Car loan', amt:'$302.90'});
+    cands.sort(function(a,b){return a.date-b.date;});
+    var next = cands[0];
+    var days = Math.round((next.date - now)/86400000);
+    document.getElementById('tileNextBill').textContent = next.name + ' ' + next.amt;
+    document.getElementById('tileNextBillFoot').textContent =
+      (days===0 ? 'due today' : 'in ' + days + ' day' + (days===1?'':'s')) + ' (' + fmtShort(next.date) + ')';
+  }
+  computeNextBill();
+
+  // ---------- Free-and-clear streak ----------
+  const quitDateInput = document.getElementById('quitDate');
+
+  const MILESTONES = [
+    { hrs: 24,     label: '24 hours', note: 'THC starts leaving your bloodstream.' },
+    { hrs: 72,     label: '3 days',   note: 'Peak withdrawal window — behind you now.' },
+    { hrs: 24*7,   label: '1 week',   note: 'Sleep and appetite start leveling out.' },
+    { hrs: 24*14,  label: '2 weeks',  note: 'Mood stabilizing; mental clarity coming back.' },
+    { hrs: 24*30,  label: '30 days',  note: 'One month — the old routine is genuinely broken.' },
+    { hrs: 24*60,  label: '60 days',  note: 'Motivation and focus often noticeably better.' },
+    { hrs: 24*90,  label: '90 days',  note: 'New baseline. Reassess and decide what’s next.' },
+  ];
+
+  function renderMilestones(hoursClean) {
+    const list = document.getElementById('milestoneList');
+    list.innerHTML = '';
+    MILESTONES.forEach(m => {
+      const reached = hoursClean >= m.hrs;
+      const li = document.createElement('li');
+      li.innerHTML = '<span class="m-badge ' + (reached ? 'reached' : '') + '">' + (reached ? '✓' : '') + '</span>' +
+        '<div class="txt"><strong>' + m.label + '</strong><span>' + m.note + '</span></div>';
+      list.appendChild(li);
+    });
+  }
+
+  function refreshStreak() {
+    const val = quitDateInput.value;
+    if (!val) return;
+    const qd = new Date(val + 'T00:00:00');
+    const now = new Date();
+    const hoursClean = Math.max(0, (now - qd) / 3600000);
+    const daysClean = Math.floor(hoursClean / 24);
+    document.getElementById('streakSummary').textContent =
+      daysClean === 0 ? 'Day 1 — today counts.' : daysClean + ' day' + (daysClean === 1 ? '' : 's') + ' free';
+    var wks = Math.floor(daysClean / 7);
+    document.getElementById('tileFree').textContent = daysClean + (daysClean === 1 ? ' day' : ' days');
+    renderMilestones(hoursClean);
+  }
+  quitDateInput.addEventListener('change', refreshStreak);
+  refreshStreak();
+
+  // ---------- Financial snapshot ----------
+  function refreshFin() {
+    const income = parseFloat(document.getElementById('finIncome').value) || 0;
+    const expenses = parseFloat(document.getElementById('finExpenses').value) || 0;
+    const savingsTarget = parseFloat(document.getElementById('finSavings').value) || 0;
+    const freed = parseFloat(document.getElementById('finFreed').value) || 0;
+    const out = document.getElementById('finOut');
+    if (!income && !expenses) { out.textContent = 'Fill in the fields above to see what’s left over.'; return; }
+    const leftover = income - expenses;
+    const afterSavings = leftover - savingsTarget;
+    out.innerHTML = 'Leftover after fixed expenses: <strong>$' + leftover.toFixed(2) + '</strong><br>' +
+      'After your savings target: <strong>$' + afterSavings.toFixed(2) + '</strong><br>' +
+      (freed ? 'Plus ~$' + freed.toFixed(2) + '/mo freed by the cuts — send that straight at the Visa.' : '');
+  }
+  ['finIncome','finExpenses','finSavings','finFreed'].forEach(id =>
+    document.getElementById(id).addEventListener('input', refreshFin)
+  );
+  refreshFin();
+</script>
+</body>
+</html>

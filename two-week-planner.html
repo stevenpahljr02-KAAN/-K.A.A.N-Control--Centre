@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steven Pahl — Two-Week Plan</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f172a;
+    color: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 20px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 21px; margin-bottom: 2px; }
+  .subtitle { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .stat {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 700; color: #f1f5f9; }
+  .stat-label { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+  .section { margin-bottom: 26px; }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .week-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #60a5fa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 16px 0 8px;
+  }
+
+  .day {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .day-name { font-size: 13px; font-weight: 700; color: #f1f5f9; }
+  .day-date { font-size: 11px; color: #64748b; }
+  .stop-list { font-size: 13px; color: #cbd5e1; line-height: 1.6; }
+  .stop-list .done { color: #10b981; }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 5px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-done { background: rgba(16,185,129,0.15); color: #10b981; }
+  .badge-block { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .badge-tbd { background: rgba(245,158,11,0.15); color: #f59e0b; }
+
+  .day.blocked { border-color: #ef4444; background: rgba(239,68,68,0.06); }
+  .day.done-day { opacity: 0.75; }
+
+  .card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .card-title { font-size: 14px; color: #f1f5f9; line-height: 1.45; }
+  .card-sub { font-size: 12px; color: #94a3b8; margin-top: 5px; }
+  .pill-row { margin-top: 8px; }
+  .pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-right: 6px;
+  }
+  .pill-waiting { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .pill-overdue { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+  .pill-flag { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+
+  .onsite-header { color: #ef4444; }
+  .desk-header { color: #f59e0b; }
+
+  .footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid #334155;
+  }
+  .note {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<h1>Steven Pahl — Field Sales</h1>
+<div class="subtitle">Two-Week Plan · Aug 17 – Aug 30, 2026</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">4</div><div class="stat-label">Waiting on a response</div></div>
+  <div class="stat"><div class="stat-num">34d</div><div class="stat-label">Oldest open follow-up</div></div>
+  <div class="stat"><div class="stat-num">11</div><div class="stat-label">Active items tracked</div></div>
+</div>
+
+<div class="section">
+  <div class="section-title">🗺 Route — Next Two Weeks</div>
+  <div class="note">Built from each account's visit frequency and rotation — flag anything that looks off.</div>
+
+  <div class="week-label">Week 1 · Aug 17–21</div>
+
+  <div class="day done-day">
+    <div class="day-header"><span class="day-name">Monday, Aug 17</span><span class="badge badge-done">✓ Done</span></div>
+    <div class="stop-list">Laidlaw Mississauga · SMTR / Robert's Transport · Paclease · Caravan Group</div>
+  </div>
+
+  <div class="day done-day">
+    <div class="day-header"><span class="day-name">Tuesday, Aug 18</span><span class="badge badge-done">✓ Done</span></div>
+    <div class="stop-list">Laidlaw Puslinch · Fasmag Vending (Puslinch) · Thur Transport · Brian Kurtz Trucking</div>
+  </div>
+
+  <div class="day">
+    <div class="day-header"><span class="day-name">Wednesday, Aug 19</span><span class="day-date"></span></div>
+    <div class="stop-list">Contrans Flatbed Hagersville · Inland Truck and Trailer · Cotton Inc. · Laidlaw Hamilton · Fluke Transport</div>
+  </div>
+
+  <div class="day blocked">
+    <div class="day-header"><span class="day-name">Thursday, Aug 20</span><span class="badge badge-block">Full day — blocked</span></div>
+    <div class="stop-list">Install in Ingersoll (via Catherine) — 6:30am to ~5:00pm. Nothing else scheduled.</div>
+  </div>
+
+  <div class="day">
+    <div class="day-header"><span class="day-name">Friday, Aug 21</span><span class="day-date"></span></div>
+    <div class="stop-list">Laidlaw Puslinch · Fasmag Vending (Puslinch) · Thur Transport</div>
+  </div>
+
+  <div class="week-label">Week 2 · Aug 24–30</div>
+
+  <div class="day">
+    <div class="day-header"><span class="day-name">Monday, Aug 24</span><span class="day-date"></span></div>
+    <div class="stop-list">Laidlaw Mississauga · SMTR / Robert's Transport · Caravan Group · Paclease</div>
+  </div>
+
+  <div class="day">
+    <div class="day-header"><span class="day-name">Tuesday, Aug 25</span><span class="day-date"></span></div>
+    <div class="stop-list">H&amp;E Heavy Truck · Laidlaw Puslinch · Fasmag Vending (Puslinch) · Thur Transport</div>
+  </div>
+
+  <div class="day">
+    <div class="day-header"><span class="day-name">Wednesday, Aug 26</span><span class="day-date"></span></div>
+    <div class="stop-list">Contrans Flatbed Hagersville · Jonker Trucking <span class="badge badge-tbd">confirm</span> · Scott Woods Transport <span class="badge badge-tbd">confirm</span></div>
+  </div>
+
+  <div class="day">
+    <div class="day-header"><span class="day-name">Thursday, Aug 27</span><span class="badge badge-tbd">Partly TBD</span></div>
+    <div class="stop-list">Laidlaw Hamilton · Fluke Transport · Sharp Transportation <span class="badge badge-tbd">confirm</span> · TPT Systems <span class="badge badge-tbd">confirm</span> — plus Catherine's two accounts (which ones, still unresolved — see Tom Lyard email)</div>
+  </div>
+
+  <div class="day">
+    <div class="day-header"><span class="day-name">Friday, Aug 28</span><span class="day-date"></span></div>
+    <div class="stop-list">Laidlaw Puslinch · Fasmag Vending (Puslinch) · Thur Transport</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">📤 Waiting On a Response <span style="font-size:12px;color:#94a3b8;font-weight:500;">(4)</span></div>
+
+  <div class="card">
+    <div class="card-title">Fleet Maintenance — ball valve + minimum spend conversation</div>
+    <div class="pill-row"><span class="pill pill-overdue">Sent 34 days ago</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ontario Readymix (Milton) — ball valves quote</div>
+    <div class="card-sub">Now past Steve Senior — waiting on the PO back from Mike Thompson.</div>
+    <div class="pill-row"><span class="pill pill-overdue">Sent 31 days ago</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Caravan Group — new equipment decision</div>
+    <div class="card-sub">Waiting to hear from JP on what they want to do.</div>
+    <div class="pill-row"><span class="pill pill-waiting">Sent 20 days ago</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Scott Woods Transport — quote given on-site</div>
+    <div class="card-sub">Waiting on Dave to send the PO back — chase if it doesn't land soon.</div>
+    <div class="pill-row"><span class="pill pill-waiting">Sent 19 days ago</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title onsite-header">🔴 Onsite — Next Visit</div>
+
+  <div class="card">
+    <div class="card-title">Hagersville — plan the reinstall.</div>
+    <div class="pill-row"><span class="pill pill-flag">Not on you — waiting on Steve Senior re: invoice</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Inland — brass bin sticker done, still need the bolt bin sticker.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Thur Transport — hand-write the brass billing codes on the stickers with a Sharpie.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Bud (Laidlaw Hamilton) — per Tom, talk through where he's sourcing the other vending items and what he spends monthly.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Take pictures of the trays and equipment for TPT Systems.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Popular Tire — print a bolt size sheet.</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title desk-header">🟡 Desk</div>
+
+  <div class="card">
+    <div class="card-title">Follow up on Frank's quote at Mohawk Racetrack — regular monthly quote.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Your own client portal review — check every account for anything not yet tracked.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Follow up with Lisa (Fluke) — voicemail left, calling again Wednesday.</div>
+    <div class="pill-row"><span class="pill pill-waiting">Waiting on Lisa</span></div>
+  </div>
+</div>
+
+<div class="footer">Steven Pahl · Field Sales HQ — plan rebuilt from live tracking, updated as things change.</div>
+
+</body>
+</html>
